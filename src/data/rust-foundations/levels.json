@@ -1,0 +1,89 @@
+[
+  {
+    "id": "rust-level-1",
+    "pathId": "rust-foundations",
+    "orderIndex": 1,
+    "title": "Réveiller le noyau",
+    "concept": "println! et la sortie standard",
+    "summary": "Votre premier objectif est de réactiver la console principale du noyau en affichant un message exact.",
+    "missionText": "Le noyau central ne répond plus. Pour vérifier que la console fonctionne encore, vous devez afficher un message précis avec Rust. Ce niveau introduit la macro println! et la notion de sortie standard.",
+    "lessonSections": [
+      {
+        "heading": "Afficher du texte",
+        "content": "En Rust, la macro println! permet d'écrire du texte dans la sortie standard. Elle ajoute automatiquement un retour à la ligne."
+      },
+      {
+        "heading": "Respecter la sortie attendue",
+        "content": "Dans CoreQuest, la validation repose sur la sortie réelle. Une petite différence de texte suffit à faire échouer l'exercice."
+      }
+    ],
+    "exampleCode": "fn main() {\n    println!(\"Noyau en ligne\");\n}",
+    "instructions": [
+      "Modifiez le starter code pour afficher exactement le texte demandé.",
+      "Gardez la fonction main.",
+      "Utilisez println!."
+    ],
+    "starterCode": "fn main() {\n    println!(\"Remplace ce message\");\n}",
+    "expectedOutput": "Noyau réveillé",
+    "hint": "Le texte attendu doit être identique, majuscule et accent compris.",
+    "xpReward": 20
+  },
+  {
+    "id": "rust-level-2",
+    "pathId": "rust-foundations",
+    "orderIndex": 2,
+    "title": "Stabiliser un signal",
+    "concept": "variables immuables",
+    "summary": "Le système a besoin d'une valeur mémorisée avant de pouvoir l'afficher proprement.",
+    "missionText": "Vous allez stocker un message dans une variable, puis l'afficher. Ce niveau introduit let et l'immuabilité par défaut en Rust.",
+    "lessonSections": [
+      {
+        "heading": "Déclarer une variable",
+        "content": "Le mot-clé let permet de créer une variable. Par défaut, cette variable est immuable."
+      },
+      {
+        "heading": "Réutiliser une valeur",
+        "content": "Stocker une valeur dans une variable rend le code plus lisible et prépare les niveaux suivants."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let status = \"Signal stable\";\n    println!(\"{}\", status);\n}",
+    "instructions": [
+      "Créez une variable nommée status.",
+      "Affectez-lui le texte Signal stable.",
+      "Affichez ensuite cette variable."
+    ],
+    "starterCode": "fn main() {\n    // Déclare une variable puis affiche-la\n}",
+    "expectedOutput": "Signal stable",
+    "hint": "Utilisez let pour déclarer la variable, puis println!(\"{}\", status).",
+    "xpReward": 25
+  },
+  {
+    "id": "rust-level-3",
+    "pathId": "rust-foundations",
+    "orderIndex": 3,
+    "title": "Réaligner la température",
+    "concept": "types numériques et expression simple",
+    "summary": "Le noyau vous demande de calculer une valeur simple avant de la publier.",
+    "missionText": "Le capteur renvoie deux nombres. Vous devez les additionner et afficher le résultat pour réaligner le système thermique.",
+    "lessonSections": [
+      {
+        "heading": "Utiliser des nombres",
+        "content": "Rust sait manipuler des nombres entiers directement dans des variables ou des expressions."
+      },
+      {
+        "heading": "Afficher un résultat calculé",
+        "content": "Vous pouvez passer une expression ou une variable numérique à println! avec {}."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let a = 4;\n    let b = 3;\n    println!(\"{}\", a + b);\n}",
+    "instructions": [
+      "Déclarez deux variables numériques.",
+      "Additionnez-les.",
+      "Affichez exactement le résultat."
+    ],
+    "starterCode": "fn main() {\n    let left = 8;\n    let right = 5;\n\n    println!(\"{}\", 0);\n}",
+    "expectedOutput": "13",
+    "hint": "Le plus simple est d'utiliser println!(\"{}\", left + right).",
+    "xpReward": 30
+  }
+]
