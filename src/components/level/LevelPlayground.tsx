@@ -55,7 +55,7 @@ export function LevelPlayground({ level, nextLevelId }: LevelPlaygroundProps) {
         setResult({
           status: "sandbox_error",
           stdout: "",
-          stderr: "error" in data ? data.error : "Erreur technique inattendue.",
+          stderr: "Erreur technique inattendue.",
           durationMs: 0,
           passed: false,
         });
@@ -83,16 +83,13 @@ export function LevelPlayground({ level, nextLevelId }: LevelPlaygroundProps) {
 
   return (
     <div className="space-y-4">
-      <CodeEditor starterCode={level.starterCode} isRunning={isRunning} onRun={handleRun} />
+      <CodeEditor isRunning={isRunning} onRun={handleRun} />
       {isCompleted ? (
         <Alert tone="success">
           <div className="space-y-3">
             <div className="space-y-1">
-              <p className="font-medium">Niveau terminé.</p>
-              <p>
-                {completionMessage ??
-                  "Votre solution est correcte. On prépare la suite du parcours."}
-              </p>
+              <p className="font-medium">Exercice validé</p>
+              <p>{completionMessage ?? "La progression est en cours de mise à jour."}</p>
             </div>
             <div className="flex flex-wrap gap-3">
               {resolvedNextLevelId ? (
@@ -101,7 +98,7 @@ export function LevelPlayground({ level, nextLevelId }: LevelPlaygroundProps) {
                 </Button>
               ) : null}
               <Button asChild variant="secondary">
-                <Link href="/map">Voir la carte</Link>
+                <Link href="/map">Voir le parcours</Link>
               </Button>
             </div>
           </div>
@@ -132,7 +129,7 @@ export function LevelPlayground({ level, nextLevelId }: LevelPlaygroundProps) {
         }
 
         setCompletionMessage(
-          "Exercice réussi. Connectez-vous pour sauvegarder la progression et débloquer la suite durablement.",
+          "Connectez-vous pour enregistrer cette réussite et accéder à la suite du parcours.",
         );
         setResolvedNextLevelId(nextLevelId);
         return;
@@ -142,28 +139,46 @@ export function LevelPlayground({ level, nextLevelId }: LevelPlaygroundProps) {
 
       if (!response.ok || "error" in data) {
         setCompletionMessage(
-          "Exercice réussi, mais la progression n’a pas encore pu être enregistrée.",
+          "La solution est correcte, mais la progression n’a pas pu être enregistrée.",
         );
         setResolvedNextLevelId(nextLevelId);
         return;
       }
 
       setResolvedNextLevelId(data.nextLevelId);
-      setCompletionMessage(
-        data.nextLevelId
-          ? data.xpGranted
-            ? `Progression sauvegardée. XP total : ${data.xpTotal}. Le niveau suivant est débloqué.`
-            : "Niveau déjà validé. Vous pouvez continuer le parcours."
-          : data.xpGranted
-            ? `Progression sauvegardée. XP total : ${data.xpTotal}. Vous avez terminé le parcours disponible.`
-            : "Niveau déjà validé. Le parcours disponible est déjà complété.",
-      );
+      setCompletionMessage(buildCompletionMessage(data));
       router.refresh();
     } catch {
       setCompletionMessage(
-        "Exercice réussi, mais la sauvegarde de progression a échoué pour cette tentative.",
+        "La solution est correcte, mais la sauvegarde a échoué pour cette tentative.",
       );
       setResolvedNextLevelId(nextLevelId);
     }
   }
+}
+
+function buildCompletionMessage(data: CompleteLevelResult) {
+  if (!data.xpGranted) {
+    return data.nextLevelId
+      ? "Niveau déjà enregistré. Vous pouvez poursuivre le parcours."
+      : "Niveau déjà enregistré. Le parcours actuel est déjà terminé.";
+  }
+
+  const segments = ["Progression enregistrée", `${data.xpTotal} XP`];
+
+  if (data.nextLevelId) {
+    segments.push("niveau suivant déverrouillé");
+  } else {
+    segments.push("parcours actuel terminé");
+  }
+
+  if (data.leveledUp) {
+    segments.push(`crabe niveau ${data.crabProgress.level} atteint`);
+  } else if (!data.crabProgress.isMaxLevel) {
+    segments.push(`${data.crabProgress.xpRemainingToNextLevel} XP avant le niveau ${data.crabProgress.nextLevel} du crabe`);
+  } else {
+    segments.push("niveau maximum du crabe atteint");
+  }
+
+  return `${segments.join(" · ")}.`;
 }

@@ -7,12 +7,12 @@ type ExecutionResultProps = {
 };
 
 const statusLabels: Record<ExecutionResultType["status"], string> = {
-  success: "Succès",
-  compile_error: "Erreur de compilation",
-  runtime_error: "Erreur d’exécution",
-  wrong_output: "Sortie incorrecte",
-  timeout: "Timeout",
-  sandbox_error: "Erreur sandbox",
+  success: "Exécution réussie",
+  compile_error: "Compilation échouée",
+  runtime_error: "Erreur à l’exécution",
+  wrong_output: "Résultat incorrect",
+  timeout: "Temps dépassé",
+  sandbox_error: "Erreur technique",
 };
 
 const statusTones: Record<ExecutionResultType["status"], "info" | "success" | "danger"> = {
@@ -28,7 +28,7 @@ export function ExecutionResult({ result }: ExecutionResultProps) {
   if (!result) {
     return (
       <Alert tone="info">
-        Lancez une exécution pour voir le résultat de compilation, `stdout` et `stderr`.
+        Exécutez votre code pour afficher le résultat, la sortie standard et les éventuelles erreurs.
       </Alert>
     );
   }
@@ -37,19 +37,19 @@ export function ExecutionResult({ result }: ExecutionResultProps) {
     <Card className="space-y-4 p-5">
       <Alert tone={statusTones[result.status]}>
         <span className="font-semibold">{statusLabels[result.status]}</span>
-        {result.passed ? " — le niveau est validé." : " — vous pouvez corriger puis relancer."}
+        {getStatusMessage(result)}
       </Alert>
 
       <div className="grid gap-4">
-        <ResultBlock label="Durée" content={`${result.durationMs} ms`} />
+        <ResultBlock label="Durée d’exécution" content={`${result.durationMs} ms`} />
         <ResultBlock
-          label="stdout"
-          content={result.stdout.length > 0 ? result.stdout : "Aucune sortie standard."}
+          label="Sortie standard"
+          content={result.stdout.length > 0 ? result.stdout : "Aucune sortie produite."}
           mono
         />
         <ResultBlock
-          label="stderr"
-          content={result.stderr.length > 0 ? result.stderr : "Aucune erreur standard."}
+          label="Sortie d’erreur"
+          content={result.stderr.length > 0 ? result.stderr : "Aucune erreur produite."}
           mono
         />
         {result.status === "wrong_output" && result.expectedOutput ? (
@@ -58,6 +58,27 @@ export function ExecutionResult({ result }: ExecutionResultProps) {
       </div>
     </Card>
   );
+}
+
+function getStatusMessage(result: ExecutionResultType) {
+  if (result.passed) {
+    return " — l’exercice est validé.";
+  }
+
+  switch (result.status) {
+    case "compile_error":
+      return " — corrigez les erreurs de compilation puis relancez.";
+    case "runtime_error":
+      return " — le programme s’est lancé mais a échoué.";
+    case "wrong_output":
+      return " — la sortie ne correspond pas encore à l’attendu.";
+    case "timeout":
+      return " — l’exécution a été interrompue avant la fin.";
+    case "sandbox_error":
+      return " — un problème technique est survenu côté plateforme.";
+    default:
+      return "";
+  }
 }
 
 type ResultBlockProps = {

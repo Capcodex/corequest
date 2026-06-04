@@ -10,7 +10,7 @@ type ButtonProps<T extends ElementType = "button"> = {
 } & ComponentPropsWithoutRef<T>;
 
 const baseClassName =
-  "inline-flex items-center justify-center rounded-2xl font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center rounded-2xl font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60";
 
 const variantClassNames = {
   primary: "bg-accent text-slate-950 hover:bg-accentSoft",

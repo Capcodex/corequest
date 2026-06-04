@@ -5,27 +5,26 @@
     "orderIndex": 1,
     "title": "Réveiller le noyau",
     "concept": "println! et la sortie standard",
-    "summary": "Votre premier objectif est de réactiver la console principale du noyau en affichant un message exact.",
-    "missionText": "Le noyau central ne répond plus. Pour vérifier que la console fonctionne encore, vous devez afficher un message précis avec Rust. Ce niveau introduit la macro println! et la notion de sortie standard.",
+    "summary": "Votre première mission consiste à afficher un message exact pour confirmer que la console répond.",
+    "missionText": "Le noyau central ne répond plus. Vous devez écrire un programme Rust complet qui affiche exactement le message attendu afin de réactiver la console de bord.",
     "lessonSections": [
       {
         "heading": "Afficher du texte",
-        "content": "En Rust, la macro println! permet d'écrire du texte dans la sortie standard. Elle ajoute automatiquement un retour à la ligne."
+        "content": "La macro println! écrit du texte dans la sortie standard et ajoute automatiquement un retour à la ligne."
       },
       {
         "heading": "Respecter la sortie attendue",
-        "content": "Dans CoreQuest, la validation repose sur la sortie réelle. Une petite différence de texte suffit à faire échouer l'exercice."
+        "content": "Dans CoreQuest, la validation compare la sortie exacte. Une différence de casse, d'accent ou d'espace fait échouer l'exercice."
       }
     ],
     "exampleCode": "fn main() {\n    println!(\"Noyau en ligne\");\n}",
     "instructions": [
-      "Modifiez le starter code pour afficher exactement le texte demandé.",
-      "Gardez la fonction main.",
-      "Utilisez println!."
+      "Écrivez un programme Rust complet avec une fonction main.",
+      "Affichez exactement le texte demandé.",
+      "Utilisez println! pour produire la sortie."
     ],
-    "starterCode": "fn main() {\n    println!(\"Remplace ce message\");\n}",
     "expectedOutput": "Noyau réveillé",
-    "hint": "Le texte attendu doit être identique, majuscule et accent compris.",
+    "hint": "Commencez par fn main() { ... } puis utilisez println!(\"Noyau réveillé\");.",
     "xpReward": 20
   },
   {
@@ -34,27 +33,26 @@
     "orderIndex": 2,
     "title": "Stabiliser un signal",
     "concept": "variables immuables",
-    "summary": "Le système a besoin d'une valeur mémorisée avant de pouvoir l'afficher proprement.",
-    "missionText": "Vous allez stocker un message dans une variable, puis l'afficher. Ce niveau introduit let et l'immuabilité par défaut en Rust.",
+    "summary": "Vous allez mémoriser une valeur dans une variable avant de l'afficher.",
+    "missionText": "Le système attend un message stocké dans une variable pour confirmer que le signal principal est stable. Créez la variable puis affichez-la.",
     "lessonSections": [
       {
         "heading": "Déclarer une variable",
-        "content": "Le mot-clé let permet de créer une variable. Par défaut, cette variable est immuable."
+        "content": "Le mot-clé let permet de créer une variable. En Rust, une variable est immuable par défaut."
       },
       {
         "heading": "Réutiliser une valeur",
-        "content": "Stocker une valeur dans une variable rend le code plus lisible et prépare les niveaux suivants."
+        "content": "Stocker une donnée dans une variable rend le programme plus lisible et prépare les exercices suivants."
       }
     ],
     "exampleCode": "fn main() {\n    let status = \"Signal stable\";\n    println!(\"{}\", status);\n}",
     "instructions": [
       "Créez une variable nommée status.",
       "Affectez-lui le texte Signal stable.",
-      "Affichez ensuite cette variable."
+      "Affichez ensuite cette variable dans un programme complet."
     ],
-    "starterCode": "fn main() {\n    // Déclare une variable puis affiche-la\n}",
     "expectedOutput": "Signal stable",
-    "hint": "Utilisez let pour déclarer la variable, puis println!(\"{}\", status).",
+    "hint": "Déclarez la variable avec let, puis utilisez println!(\"{}\", status).",
     "xpReward": 25
   },
   {
@@ -62,28 +60,503 @@
     "pathId": "rust-foundations",
     "orderIndex": 3,
     "title": "Réaligner la température",
-    "concept": "types numériques et expression simple",
-    "summary": "Le noyau vous demande de calculer une valeur simple avant de la publier.",
-    "missionText": "Le capteur renvoie deux nombres. Vous devez les additionner et afficher le résultat pour réaligner le système thermique.",
+    "concept": "nombres entiers et addition",
+    "summary": "Le noyau vous demande de calculer une valeur simple avant de l'afficher.",
+    "missionText": "Deux capteurs envoient les valeurs 4 et 3. Additionnez-les puis affichez le résultat final pour réaligner la température du vaisseau.",
     "lessonSections": [
       {
-        "heading": "Utiliser des nombres",
-        "content": "Rust sait manipuler des nombres entiers directement dans des variables ou des expressions."
+        "heading": "Manipuler des entiers",
+        "content": "Rust sait additionner des nombres entiers directement dans une expression ou à partir de variables."
       },
       {
-        "heading": "Afficher un résultat calculé",
-        "content": "Vous pouvez passer une expression ou une variable numérique à println! avec {}."
+        "heading": "Afficher un calcul",
+        "content": "Vous pouvez afficher le résultat d'une opération avec println! en utilisant {}."
       }
     ],
     "exampleCode": "fn main() {\n    let a = 4;\n    let b = 3;\n    println!(\"{}\", a + b);\n}",
     "instructions": [
-      "Déclarez deux variables numériques.",
+      "Déclarez deux variables numériques contenant 4 et 3.",
       "Additionnez-les.",
-      "Affichez exactement le résultat."
+      "Affichez exactement le résultat du calcul."
     ],
-    "starterCode": "fn main() {\n    let left = 8;\n    let right = 5;\n\n    println!(\"{}\", 0);\n}",
-    "expectedOutput": "13",
-    "hint": "Le plus simple est d'utiliser println!(\"{}\", left + right).",
+    "expectedOutput": "7",
+    "hint": "Le plus simple est d'utiliser println!(\"{}\", a + b).",
     "xpReward": 30
+  },
+  {
+    "id": "rust-level-4",
+    "pathId": "rust-foundations",
+    "orderIndex": 4,
+    "title": "Ajuster la poussée",
+    "concept": "variables mutables",
+    "summary": "Cette fois, la valeur doit être modifiée avant l'affichage.",
+    "missionText": "La poussée initiale vaut 3, puis vous devez l'augmenter de 2. Utilisez une variable mutable et affichez la valeur finale.",
+    "lessonSections": [
+      {
+        "heading": "Autoriser une modification",
+        "content": "En ajoutant mut après let, vous autorisez la variable à changer de valeur."
+      },
+      {
+        "heading": "Mettre à jour une valeur",
+        "content": "Une variable mutable est utile quand une même donnée évolue au fil du programme."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let mut thrust = 3;\n    thrust = thrust + 2;\n    println!(\"{}\", thrust);\n}",
+    "instructions": [
+      "Créez une variable mutable contenant 3.",
+      "Ajoutez 2 à cette variable.",
+      "Affichez la valeur finale."
+    ],
+    "expectedOutput": "5",
+    "hint": "Utilisez let mut pour créer une variable modifiable.",
+    "xpReward": 35
+  },
+  {
+    "id": "rust-level-5",
+    "pathId": "rust-foundations",
+    "orderIndex": 5,
+    "title": "Publier un rapport",
+    "concept": "formatage avec println!",
+    "summary": "Vous allez afficher du texte et une valeur dans la même ligne.",
+    "missionText": "Le tableau de bord attend un message formaté avec une température. Affichez exactement la phrase attendue en combinant texte et nombre.",
+    "lessonSections": [
+      {
+        "heading": "Insérer des valeurs",
+        "content": "Avec {}, println! peut insérer une valeur au milieu d'un texte."
+      },
+      {
+        "heading": "Construire une phrase",
+        "content": "Le formatage est très pratique pour produire des messages lisibles sans concaténation compliquée."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let temperature = 18;\n    println!(\"Température: {}°C\", temperature);\n}",
+    "instructions": [
+      "Déclarez une variable temperature contenant 18.",
+      "Affichez un message avec le format Température: 18°C.",
+      "Respectez exactement la ponctuation et l'accent."
+    ],
+    "expectedOutput": "Température: 18°C",
+    "hint": "La sortie attendue peut être obtenue avec println!(\"Température: {}°C\", temperature).",
+    "xpReward": 40
+  },
+  {
+    "id": "rust-level-6",
+    "pathId": "rust-foundations",
+    "orderIndex": 6,
+    "title": "Valider un accès",
+    "concept": "if / else",
+    "summary": "Le système change de message selon une condition booléenne.",
+    "missionText": "Une porte de sécurité s'ouvre seulement si la variable clearance vaut true. Écrivez un programme qui affiche Accès autorisé quand clearance vaut true.",
+    "lessonSections": [
+      {
+        "heading": "Tester une condition",
+        "content": "if exécute un bloc seulement si la condition est vraie. else sert à gérer l'autre cas."
+      },
+      {
+        "heading": "Utiliser des booléens",
+        "content": "Un booléen en Rust vaut soit true soit false. Il est parfait pour piloter des choix simples."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let clearance = true;\n\n    if clearance {\n        println!(\"Accès autorisé\");\n    } else {\n        println!(\"Accès refusé\");\n    }\n}",
+    "instructions": [
+      "Déclarez une variable clearance contenant true.",
+      "Utilisez if / else pour choisir le message à afficher.",
+      "La sortie finale attendue est Accès autorisé."
+    ],
+    "expectedOutput": "Accès autorisé",
+    "hint": "Avec clearance à true, c'est le bloc if qui doit s'exécuter.",
+    "xpReward": 45
+  },
+  {
+    "id": "rust-level-7",
+    "pathId": "rust-foundations",
+    "orderIndex": 7,
+    "title": "Comparer les capteurs",
+    "concept": "comparaisons et booléens",
+    "summary": "Vous devez afficher directement le résultat d'une comparaison.",
+    "missionText": "Comparez deux valeurs numériques et affichez si la première est strictement supérieure à la seconde. Les valeurs à utiliser sont 9 et 4.",
+    "lessonSections": [
+      {
+        "heading": "Comparer des valeurs",
+        "content": "Les opérateurs comme >, < ou == produisent un booléen."
+      },
+      {
+        "heading": "Afficher true ou false",
+        "content": "Un booléen peut être affiché avec println! tout comme un nombre ou un texte."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let left = 9;\n    let right = 4;\n    println!(\"{}\", left > right);\n}",
+    "instructions": [
+      "Déclarez deux variables contenant 9 et 4.",
+      "Comparez si la première est plus grande que la seconde.",
+      "Affichez le booléen obtenu."
+    ],
+    "expectedOutput": "true",
+    "hint": "L'expression left > right renvoie déjà la valeur à afficher.",
+    "xpReward": 50
+  },
+  {
+    "id": "rust-level-8",
+    "pathId": "rust-foundations",
+    "orderIndex": 8,
+    "title": "Assembler un identifiant",
+    "concept": "String et push_str",
+    "summary": "Vous allez construire une chaîne modifiable morceau par morceau.",
+    "missionText": "Le terminal vous demande de construire le mot Rustacean en partant d'une String contenant Rust puis en ajoutant la suite avec push_str.",
+    "lessonSections": [
+      {
+        "heading": "Différence entre &str et String",
+        "content": "&str représente du texte immuable, alors que String peut être modifiée et enrichie."
+      },
+      {
+        "heading": "Ajouter du texte",
+        "content": "La méthode push_str permet d'ajouter un morceau de texte à une String existante."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let mut name = String::from(\"Rust\");\n    name.push_str(\"acean\");\n    println!(\"{}\", name);\n}",
+    "instructions": [
+      "Créez une String mutable contenant Rust.",
+      "Ajoutez le suffixe acean avec push_str.",
+      "Affichez le mot final."
+    ],
+    "expectedOutput": "Rustacean",
+    "hint": "Commencez avec String::from(\"Rust\") puis utilisez push_str(\"acean\").",
+    "xpReward": 55
+  },
+  {
+    "id": "rust-level-9",
+    "pathId": "rust-foundations",
+    "orderIndex": 9,
+    "title": "Lire un duo de coordonnées",
+    "concept": "tuples et déstructuration",
+    "summary": "Vous allez extraire une valeur depuis un tuple pour l'afficher.",
+    "missionText": "Les coordonnées de navigation sont stockées dans un tuple contenant \"Axe\" et \"Nord\". Déstructurez ce tuple et affichez les deux mots séparés par un espace.",
+    "lessonSections": [
+      {
+        "heading": "Regrouper des valeurs",
+        "content": "Un tuple permet de stocker plusieurs valeurs ensemble, même si elles sont de types différents."
+      },
+      {
+        "heading": "Déstructurer simplement",
+        "content": "Vous pouvez récupérer les éléments d'un tuple avec let (a, b) = tuple;."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let coordinates = (\"Axe\", \"Nord\");\n    let (axis, direction) = coordinates;\n    println!(\"{} {}\", axis, direction);\n}",
+    "instructions": [
+      "Créez un tuple contenant Axe et Nord.",
+      "Déstructurez ce tuple dans deux variables.",
+      "Affichez les deux mots sur une seule ligne."
+    ],
+    "expectedOutput": "Axe Nord",
+    "hint": "Le tuple peut être lu avec let (axis, direction) = coordinates;.",
+    "xpReward": 60
+  },
+  {
+    "id": "rust-level-10",
+    "pathId": "rust-foundations",
+    "orderIndex": 10,
+    "title": "Accéder à une cellule mémoire",
+    "concept": "tableaux et indexation",
+    "summary": "Vous devez aller chercher une valeur précise dans un tableau.",
+    "missionText": "Le tableau des modules contient les valeurs 3, 6 et 9. Affichez la troisième valeur en utilisant son index.",
+    "lessonSections": [
+      {
+        "heading": "Créer un tableau",
+        "content": "Un tableau Rust se note avec des crochets, par exemple [3, 6, 9]."
+      },
+      {
+        "heading": "Compter depuis zéro",
+        "content": "Le premier élément a l'index 0, le second 1, et ainsi de suite."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let modules = [3, 6, 9];\n    println!(\"{}\", modules[2]);\n}",
+    "instructions": [
+      "Créez un tableau contenant 3, 6 et 9.",
+      "Accédez au troisième élément avec son index.",
+      "Affichez cette valeur."
+    ],
+    "expectedOutput": "9",
+    "hint": "Le troisième élément d'un tableau est à l'index 2.",
+    "xpReward": 65
+  },
+  {
+    "id": "rust-level-11",
+    "pathId": "rust-foundations",
+    "orderIndex": 11,
+    "title": "Accumuler l'énergie",
+    "concept": "boucle while",
+    "summary": "Vous allez répéter une opération jusqu'à atteindre le résultat attendu.",
+    "missionText": "Accumulez les valeurs de 1 à 4 dans une variable total à l'aide d'une boucle while, puis affichez le total obtenu.",
+    "lessonSections": [
+      {
+        "heading": "Répéter avec while",
+        "content": "Une boucle while s'exécute tant qu'une condition reste vraie."
+      },
+      {
+        "heading": "Mettre à jour plusieurs variables",
+        "content": "Dans une boucle, on modifie souvent un compteur et un accumulateur."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let mut index = 1;\n    let mut total = 0;\n\n    while index <= 4 {\n        total = total + index;\n        index = index + 1;\n    }\n\n    println!(\"{}\", total);\n}",
+    "instructions": [
+      "Créez un compteur qui démarre à 1.",
+      "Ajoutez successivement 1, 2, 3 et 4 dans total avec while.",
+      "Affichez le total final."
+    ],
+    "expectedOutput": "10",
+    "hint": "Pensez à faire évoluer le compteur à chaque tour pour sortir de la boucle.",
+    "xpReward": 70
+  },
+  {
+    "id": "rust-level-12",
+    "pathId": "rust-foundations",
+    "orderIndex": 12,
+    "title": "Analyser une série",
+    "concept": "boucle for",
+    "summary": "Vous allez parcourir plusieurs valeurs avec une boucle for.",
+    "missionText": "Parcourez les valeurs 2, 3 et 4 avec une boucle for, multipliez-les dans une variable product, puis affichez le résultat final.",
+    "lessonSections": [
+      {
+        "heading": "Parcourir une collection",
+        "content": "La boucle for est idéale pour lire chaque valeur d'un tableau ou d'un vecteur."
+      },
+      {
+        "heading": "Construire un résultat progressif",
+        "content": "À chaque passage, vous pouvez réutiliser la valeur courante pour enrichir un calcul."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let values = [2, 3, 4];\n    let mut product = 1;\n\n    for value in values {\n        product = product * value;\n    }\n\n    println!(\"{}\", product);\n}",
+    "instructions": [
+      "Créez un tableau contenant 2, 3 et 4.",
+      "Parcourez-le avec une boucle for.",
+      "Multipliez les valeurs dans product puis affichez le résultat."
+    ],
+    "expectedOutput": "24",
+    "hint": "Initialisez product à 1, puis multipliez-le par chaque valeur parcourue.",
+    "xpReward": 75
+  },
+  {
+    "id": "rust-level-13",
+    "pathId": "rust-foundations",
+    "orderIndex": 13,
+    "title": "Déclencher une routine",
+    "concept": "fonctions sans paramètre",
+    "summary": "Vous allez appeler une fonction dédiée depuis main.",
+    "missionText": "Créez une fonction nommée status qui affiche Réacteur prêt, puis appelez-la depuis main.",
+    "lessonSections": [
+      {
+        "heading": "Découper son code",
+        "content": "Une fonction permet de regrouper une action sous un nom clair et réutilisable."
+      },
+      {
+        "heading": "Appeler une fonction",
+        "content": "Une fois définie, une fonction peut être appelée depuis main comme une instruction classique."
+      }
+    ],
+    "exampleCode": "fn status() {\n    println!(\"Réacteur prêt\");\n}\n\nfn main() {\n    status();\n}",
+    "instructions": [
+      "Créez une fonction status sans paramètre.",
+      "Faites-lui afficher Réacteur prêt.",
+      "Appelez cette fonction depuis main."
+    ],
+    "expectedOutput": "Réacteur prêt",
+    "hint": "Définissez la fonction avant main pour la garder bien visible pendant l'exercice.",
+    "xpReward": 80
+  },
+  {
+    "id": "rust-level-14",
+    "pathId": "rust-foundations",
+    "orderIndex": 14,
+    "title": "Calculer une poussée finale",
+    "concept": "fonctions avec paramètres et retour",
+    "summary": "Vous allez passer des valeurs à une fonction et récupérer son résultat.",
+    "missionText": "Créez une fonction add qui reçoit 5 et 7, renvoie leur somme, puis affichez le résultat depuis main.",
+    "lessonSections": [
+      {
+        "heading": "Recevoir des paramètres",
+        "content": "Une fonction peut recevoir des valeurs en entrée pour produire un résultat."
+      },
+      {
+        "heading": "Retourner une valeur",
+        "content": "En Rust, la dernière expression d'une fonction peut servir de valeur de retour."
+      }
+    ],
+    "exampleCode": "fn add(left: i32, right: i32) -> i32 {\n    left + right\n}\n\nfn main() {\n    let result = add(5, 7);\n    println!(\"{}\", result);\n}",
+    "instructions": [
+      "Créez une fonction add avec deux paramètres i32.",
+      "Faites-lui renvoyer la somme des deux valeurs.",
+      "Appelez-la avec 5 et 7 puis affichez le résultat."
+    ],
+    "expectedOutput": "12",
+    "hint": "La dernière ligne de la fonction peut simplement être left + right sans point-virgule.",
+    "xpReward": 85
+  },
+  {
+    "id": "rust-level-15",
+    "pathId": "rust-foundations",
+    "orderIndex": 15,
+    "title": "Classifier un état critique",
+    "concept": "if comme expression",
+    "summary": "Vous allez utiliser if pour produire directement une valeur texte.",
+    "missionText": "La température vaut 92. Créez une variable message qui contient Surchauffe si la température est supérieure à 90, sinon Stable. Affichez ensuite ce message.",
+    "lessonSections": [
+      {
+        "heading": "if retourne une valeur",
+        "content": "En Rust, if peut être utilisé comme une expression et attribuer directement une valeur à une variable."
+      },
+      {
+        "heading": "Éviter le code dupliqué",
+        "content": "Ce style permet de choisir une valeur une seule fois, puis de l'afficher ensuite."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let temperature = 92;\n    let message = if temperature > 90 { \"Surchauffe\" } else { \"Stable\" };\n    println!(\"{}\", message);\n}",
+    "instructions": [
+      "Déclarez une variable temperature contenant 92.",
+      "Utilisez if comme expression pour choisir entre Surchauffe et Stable.",
+      "Affichez la variable message."
+    ],
+    "expectedOutput": "Surchauffe",
+    "hint": "Affectez le résultat du if à une variable message avant le println!.",
+    "xpReward": 90
+  },
+  {
+    "id": "rust-level-16",
+    "pathId": "rust-foundations",
+    "orderIndex": 16,
+    "title": "Reconfigurer une mesure",
+    "concept": "shadowing",
+    "summary": "Vous allez redéfinir une variable en vous appuyant sur sa valeur précédente.",
+    "missionText": "Déclarez une variable points contenant 21, redéfinissez-la ensuite pour doubler sa valeur, puis affichez le résultat final.",
+    "lessonSections": [
+      {
+        "heading": "Redéclarer proprement",
+        "content": "Le shadowing permet de redéclarer une variable avec le même nom sans utiliser mut."
+      },
+      {
+        "heading": "Transformer une valeur étape par étape",
+        "content": "C'est pratique pour exprimer une évolution logique tout en gardant un code lisible."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let points = 21;\n    let points = points * 2;\n    println!(\"{}\", points);\n}",
+    "instructions": [
+      "Créez une variable points contenant 21.",
+      "Redéclarez points pour qu'elle vaille le double.",
+      "Affichez la nouvelle valeur."
+    ],
+    "expectedOutput": "42",
+    "hint": "Vous pouvez écrire let points = points * 2; juste après la première déclaration.",
+    "xpReward": 95
+  },
+  {
+    "id": "rust-level-17",
+    "pathId": "rust-foundations",
+    "orderIndex": 17,
+    "title": "Choisir une direction",
+    "concept": "match",
+    "summary": "Vous allez sélectionner un texte en fonction d'une valeur entière.",
+    "missionText": "La variable route vaut 2. Utilisez match pour afficher Cap sud quand la valeur vaut 2. Gérez aussi au moins un autre cas et un cas par défaut.",
+    "lessonSections": [
+      {
+        "heading": "Comparer plusieurs cas",
+        "content": "match permet de décrire plusieurs branches de manière lisible et exhaustive."
+      },
+      {
+        "heading": "Prévoir un cas par défaut",
+        "content": "Le motif _ attrape tous les cas non couverts explicitement."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let route = 2;\n\n    match route {\n        1 => println!(\"Cap nord\"),\n        2 => println!(\"Cap sud\"),\n        _ => println!(\"Cap inconnu\"),\n    }\n}",
+    "instructions": [
+      "Déclarez une variable route contenant 2.",
+      "Utilisez match pour choisir le message à afficher.",
+      "Affichez Cap sud pour la valeur 2."
+    ],
+    "expectedOutput": "Cap sud",
+    "hint": "Pensez à ajouter une branche _ => ... pour couvrir les autres cas.",
+    "xpReward": 100
+  },
+  {
+    "id": "rust-level-18",
+    "pathId": "rust-foundations",
+    "orderIndex": 18,
+    "title": "Sécuriser une lecture optionnelle",
+    "concept": "Option et unwrap_or",
+    "summary": "Vous allez récupérer une valeur optionnelle avec un repli sûr.",
+    "missionText": "Créez une variable energy de type Option<i32> contenant Some(7), récupérez sa valeur avec unwrap_or(0), puis affichez le résultat.",
+    "lessonSections": [
+      {
+        "heading": "Représenter une absence possible",
+        "content": "Option<T> vaut soit Some(valeur), soit None. C'est une manière sûre d'exprimer qu'une donnée peut manquer."
+      },
+      {
+        "heading": "Prévoir une valeur de secours",
+        "content": "unwrap_or permet d'obtenir la valeur interne si elle existe, sinon une valeur de remplacement."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let energy: Option<i32> = Some(7);\n    let output = energy.unwrap_or(0);\n    println!(\"{}\", output);\n}",
+    "instructions": [
+      "Créez une variable energy de type Option<i32> avec Some(7).",
+      "Récupérez la valeur avec unwrap_or(0).",
+      "Affichez la valeur obtenue."
+    ],
+    "expectedOutput": "7",
+    "hint": "unwrap_or(0) fonctionne même si la variable vaut None, mais ici elle contient Some(7).",
+    "xpReward": 105
+  },
+  {
+    "id": "rust-level-19",
+    "pathId": "rust-foundations",
+    "orderIndex": 19,
+    "title": "Transmettre un message au crabe",
+    "concept": "emprunt avec &str",
+    "summary": "Vous allez passer un texte à une fonction sans le déplacer.",
+    "missionText": "Créez une fonction greet qui reçoit un &str nommé name et affiche Bonjour, suivi du nom. Appelez-la avec Ferris depuis main.",
+    "lessonSections": [
+      {
+        "heading": "Passer une référence de texte",
+        "content": "Le type &str permet d'emprunter du texte sans transférer la propriété de la donnée."
+      },
+      {
+        "heading": "Composer un message réutilisable",
+        "content": "Une fonction qui reçoit un &str est pratique pour afficher un message à partir de différents noms."
+      }
+    ],
+    "exampleCode": "fn greet(name: &str) {\n    println!(\"Bonjour, {}\", name);\n}\n\nfn main() {\n    greet(\"Ferris\");\n}",
+    "instructions": [
+      "Créez une fonction greet qui reçoit un paramètre &str.",
+      "Affichez Bonjour, suivi de la valeur reçue.",
+      "Appelez cette fonction avec Ferris depuis main."
+    ],
+    "expectedOutput": "Bonjour, Ferris",
+    "hint": "Le type du paramètre peut être écrit name: &str.",
+    "xpReward": 110
+  },
+  {
+    "id": "rust-level-20",
+    "pathId": "rust-foundations",
+    "orderIndex": 20,
+    "title": "Boucler la boucle énergétique",
+    "concept": "Vec et accumulation finale",
+    "summary": "Dernière étape du parcours de base : additionner plusieurs valeurs stockées dans un vecteur.",
+    "missionText": "Créez un vecteur contenant 1, 2, 3, 4 et 5. Parcourez-le avec une boucle for, additionnez les valeurs dans total, puis affichez le résultat final.",
+    "lessonSections": [
+      {
+        "heading": "Utiliser un vecteur",
+        "content": "Vec permet de stocker une collection dynamique de valeurs du même type."
+      },
+      {
+        "heading": "Réinvestir les bases",
+        "content": "Ce dernier niveau combine collection, boucle, variable mutable et affichage dans un seul exercice."
+      }
+    ],
+    "exampleCode": "fn main() {\n    let values = vec![1, 2, 3, 4, 5];\n    let mut total = 0;\n\n    for value in values {\n        total = total + value;\n    }\n\n    println!(\"{}\", total);\n}",
+    "instructions": [
+      "Créez un vecteur contenant 1, 2, 3, 4 et 5.",
+      "Parcourez-le avec une boucle for et additionnez les valeurs dans total.",
+      "Affichez le total final."
+    ],
+    "expectedOutput": "15",
+    "hint": "Initialisez total à 0, puis ajoutez chaque valeur rencontrée dans la boucle.",
+    "xpReward": 115
   }
 ]

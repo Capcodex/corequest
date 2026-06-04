@@ -1,3 +1,4 @@
+﻿import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { completeLevel } from "@/lib/progress/completeLevel";
 import { createClient } from "@/lib/supabase/server";
@@ -20,10 +21,18 @@ export async function POST(request: NextRequest) {
 
   try {
     const result = await completeLevel(user.id, levelId);
-    return NextResponse.json(result);
+
+    revalidatePath("/dashboard");
+    revalidatePath("/map");
+    revalidatePath(`/levels/${levelId}`);
+
+    return NextResponse.json(result, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "UNKNOWN_ERROR";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }
-

@@ -1,110 +1,136 @@
 # TASK.md — Backlog priorisé
 
-Références de cadrage :
+---
 
-- `AGENTS.md`
-- `docs/PLAN_IMPLEMENTATION.md`
-- `docs/PROJECT_STRUCTURE.md`
-- `docs/BACKLOG_AI.md`
-- `docs/MVP_CHECKLIST.md`
+## P0 — Modèle de contenu et progression
 
-Ce fichier ne répète pas le contexte produit : il sert uniquement de backlog de travail priorisé.
+- [ ] Définir les types `level`, `theme`, `chapter`, `exercise`, `project`, `gate`
+- [ ] Refactorer les types TypeScript pour sortir du modèle plat actuel
+- [ ] Définir les règles de déblocage entre niveaux et chapitres
+- [ ] Définir les métadonnées minimales pour `exercise` et `project`
+- [ ] Adapter les helpers de lecture de contenu au nouveau modèle
+- [ ] Adapter le modèle de progression utilisateur au nouveau découpage
+
+**Sortie attendue P0**
+
+- le contenu n’est plus modélisé comme une simple liste de niveaux ;
+- l’application sait représenter chapitres, exercices, projets et portes de déblocage.
 
 ---
 
-## P0 — Bloquants MVP
+## P1 — Moteur d’exercices v2
 
-- [x] Initialiser le projet `Next.js` + `TypeScript` + `Tailwind`
-- [x] Créer l’arborescence cible (`app`, `components`, `lib`, `data`, `types`, `sandbox-service`)
-- [x] Ajouter `.env.example`, `README.md` et `CLAUDE.md`
-- [x] Créer le design system minimal (`Button`, `Card`, `Badge`, `Alert`, `Loader`, `Header`, `Footer`, `AppShell`)
-- [x] Définir les types métier de base (`level`, `execution`, `progress`, `user`, `analytics`)
-- [x] Créer le contenu pédagogique Rust initial dans `data/rust-foundations/levels.json` avec au moins 3 niveaux
-- [x] Implémenter les helpers `getLevels` et `getLevelById`
-- [x] Construire la landing page MVP
-- [x] Construire l’onboarding MVP
-- [x] Implémenter la page de niveau statique `/levels/[levelId]`
-- [x] Implémenter l’éditeur de code avec `onRun(code)` et reset
-- [x] Créer le `sandbox-service` Rust séparé
-- [x] Implémenter l’endpoint sandbox `POST /execute`
-- [x] Implémenter l’API `POST /api/execute`
-- [x] Ajouter la validation par sortie réelle
-- [x] Afficher le feedback d’exécution (`stdout`, `stderr`, `compile_error`, `wrong_output`, `timeout`, `sandbox_error`)
+- [ ] Ajouter la gestion de l’entrée standard `stdin`
+- [ ] Ajouter plusieurs modes de validation au-delà de la sortie simple
+- [ ] Préparer les exercices orientés algorithmique
+- [ ] Garder l’éditeur simple pour les exercices courts
+- [ ] Adapter les feedbacks d’exécution aux nouveaux formats d’exercice
 
-Critère de sortie P0 :
+**Sortie attendue P1**
 
-- un utilisateur peut ouvrir le niveau 1 ;
-- lire le cours ;
-- modifier le code ;
-- exécuter du vrai Rust en sandbox ;
-- voir le résultat ;
-- corriger ;
-- réussir l’exercice.
+- les exercices peuvent couvrir des problèmes plus réalistes ;
+- le mode `exercice` reste rapide, simple et fiable.
 
 ---
 
-## P1 — Progression et persistance
+## P2 — Refonte du Niveau 1
 
-- [x] Configurer Supabase
-- [x] Mettre en place l’authentification (`signup`, `login`, `logout`)
-- [x] Créer les migrations initiales (`profiles`, `user_progress`, `level_completions`, `submissions`)
-- [x] Implémenter `getCurrentUser` et `requireUser`
-- [x] Implémenter `getUserProgress`
-- [x] Implémenter `completeLevel`
-- [x] Empêcher la double attribution d’XP
-- [x] Débloquer le niveau suivant après réussite
-- [x] Construire la carte de progression `/map`
-- [x] Construire le dashboard `/dashboard`
+- [ ] Découper le Niveau 1 en thématiques et chapitres
+- [ ] Recréer les exercices du socle : affichage, répétitions, variables, entrée, conditions
+- [ ] Ajouter plusieurs problèmes par chapitre au lieu d’un seul niveau par concept
+- [ ] Définir les premiers paliers de validation pédagogique
+- [ ] Recalibrer XP, rythme et difficulté sur ce nouveau Niveau 1
 
-Critère de sortie P1 :
+**Sortie attendue P2**
 
-- un utilisateur peut créer un compte ;
-- sauvegarder sa réussite ;
-- récupérer sa progression ;
-- débloquer le niveau suivant ;
-- reprendre depuis le dashboard.
+- le Niveau 1 devient un vrai parcours d’apprentissage structuré ;
+- la progression repose sur plusieurs exercices courts et cohérents.
 
 ---
 
-## P2 — Mesure et validation MVP
+## P3 — Mode projet / mini-IDE
 
-- [x] Implémenter le tracking analytics minimal
-- [x] Créer l’API `POST /api/analytics/event`
-- [x] Tracker home, onboarding, vue niveau, exécution, erreurs, réussite, intérêt premium
-- [x] Implémenter le module `Premium bientôt disponible`
-- [x] Sauvegarder l’intérêt Premium
-- [ ] Exécuter la checklist MVP complète
-- [x] Ajouter les tests minimums métier et sandbox
-- [ ] Faire la passe QA finale
-- [ ] Nettoyer la documentation de livraison
+- [ ] Définir le contrat `projectConfig`
+- [ ] Concevoir l’UI du mode projet séparée du mode exercice
+- [ ] Ajouter une arborescence de fichiers simple
+- [ ] Ajouter l’édition multi-fichiers
+- [ ] Ajouter les fichiers en lecture seule / fichiers éditables
+- [ ] Prévoir une vue claire pour consignes, fichiers et exécution
 
-Critère de sortie P2 :
+**Sortie attendue P3**
 
-- les événements clés sont mesurés ;
-- l’intérêt Premium est traçable ;
-- la boucle MVP est testée de bout en bout.
+- CoreQuest distingue clairement un exercice d’un projet ;
+- les projets donnent une impression de construction réelle sans devenir un IDE complet.
 
 ---
 
-## Dépendances de réalisation
+## P4 — Sandbox projet et validation avancée
 
-- Le `sandbox-service` est obligatoire avant validation réelle des exercices.
-- L’API `/api/execute` dépend du contenu niveau + du service sandbox.
-- La progression persistée dépend de l’auth et de la base.
-- La carte de progression et le dashboard dépendent de la logique de progression.
-- La QA finale ne commence qu’après fermeture de P0 et P1.
+- [ ] Supporter l’exécution multi-fichiers
+- [ ] Supporter un usage Cargo encadré pour les projets
+- [ ] Ajouter la validation par tests pour les projets
+- [ ] Définir les critères d’acceptation projet
+- [ ] Vérifier que la sandbox reste strictement bornée et sécurisée
+
+**Sortie attendue P4**
+
+- les projets sont réellement exécutables et validables ;
+- la sandbox reste compatible avec les contraintes de sécurité du produit.
 
 ---
 
-## Ordre de démarrage recommandé
+## P5 — Carte de progression et déblocages
 
-1. Initialisation projet
-2. Design system minimal
-3. Types + contenu Rust
-4. Landing + onboarding + page niveau statique
-5. Éditeur de code
-6. Sandbox-service
-7. API d’exécution + feedback
-8. Auth + progression
-9. Map + dashboard
-10. Analytics + premium + QA
+- [ ] Faire évoluer la map pour afficher chapitres, projets et gates
+- [ ] Représenter les états `non commencé`, `en cours`, `validé`, `projet`, `verrouillé`
+- [ ] Mettre à jour le dashboard pour afficher chapitre courant et prochain projet
+- [ ] Ajouter la logique de validation complète d’un niveau avant déblocage du suivant
+- [ ] Harmoniser l’XP avec la nouvelle granularité du contenu
+
+**Sortie attendue P5**
+
+- la progression visible reflète le vrai parcours pédagogique ;
+- les déblocages de niveaux supérieurs sont compréhensibles et fiables.
+
+---
+
+## P6 — Niveau 2 puis ouverture des niveaux supérieurs
+
+- [ ] Structurer le Niveau 2 : flottants, tableaux, chaînes, fonctions
+- [ ] Ajouter un premier projet de synthèse robuste au Niveau 2
+- [ ] Préparer les gates d’ouverture du Niveau 3
+- [ ] Intégrer les premières thématiques algorithmiques du Niveau 3
+- [ ] Poser la structure extensible pour les Niveaux 4 à 6
+
+**Sortie attendue P6**
+
+- le parcours dépasse le socle MVP ;
+- la montée vers l’algorithmique est installée proprement.
+
+---
+
+## P7 — QA, calibration et documentation
+
+- [ ] Vérifier les flux `exercice` et `projet`
+- [ ] Vérifier les déblocages réels entre niveaux
+- [ ] Vérifier l’UX du mode projet sur desktop d’abord, puis formats plus petits
+- [ ] Recalibrer difficulté, densité et répartition d’XP
+- [ ] Maintenir `IMPLEMENTATION_PLAN.md` et `walkthrough.md` alignés avec les arbitrages réels
+
+**Sortie attendue P7**
+
+- le nouveau parcours est cohérent, testable et documenté ;
+- le produit peut évoluer sans revenir à une structure MVP plate.
+
+---
+
+## Ordre recommandé
+
+1. P0 — Modèle de contenu et progression
+2. P1 — Moteur d’exercices v2
+3. P2 — Refonte du Niveau 1
+4. P3 — Mode projet / mini-IDE
+5. P4 — Sandbox projet et validation avancée
+6. P5 — Carte de progression et déblocages
+7. P6 — Niveau 2 puis niveaux supérieurs
+8. P7 — QA, calibration et documentation

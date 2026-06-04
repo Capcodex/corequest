@@ -25,7 +25,11 @@ describe("progressRules", () => {
 
   it("returns the next level id when available", () => {
     expect(getNextLevelId(levels, "rust-level-1")).toBe("rust-level-2");
-    expect(getNextLevelId(levels, "rust-level-3")).toBeNull();
+    expect(getNextLevelId(levels, "rust-level-20")).toBeNull();
+  });
+
+  it("exposes the full twenty-level path", () => {
+    expect(levels).toHaveLength(20);
+    expect(levels.at(-1)?.id).toBe("rust-level-20");
   });
 });
-

@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getLevels } from "@/lib/levels/getLevels";
+import { getCrabProgress } from "@/lib/progress/crabProgress";
 import {
   UserProgress,
   UserProgressRow,
@@ -29,18 +30,19 @@ export async function getUserProgress(userId: string): Promise<UserProgressSumma
   const levels = getLevels();
   const firstLevelId = levels[0]?.id ?? "rust-level-1";
   const completedLevelIds = (completions ?? []).map((completion) => completion.level_id);
+  const xpTotal = progressRow?.xp_total ?? 0;
 
   const baseProgress: UserProgress = {
     userId,
     currentLevelId: progressRow?.current_level_id ?? firstLevelId,
     completedLevelIds,
-    xpTotal: progressRow?.xp_total ?? 0,
+    xpTotal,
   };
 
   return {
     ...baseProgress,
+    crabProgress: getCrabProgress(xpTotal),
     displayName: profile?.display_name ?? null,
     email: profile?.email ?? null,
   };
 }
-

@@ -28,12 +28,12 @@ export function AuthForm({ mode }: AuthFormProps) {
   );
 
   const heading =
-    mode === "login" ? "Reprendre votre progression" : "Créer votre compte CoreQuest";
+    mode === "login" ? "Retrouver votre progression" : "Créer votre compte CoreQuest";
 
   const description =
     mode === "login"
-      ? "Connectez-vous pour retrouver vos niveaux terminés, votre XP et votre prochain objectif."
-      : "Créez un compte pour sauvegarder votre progression Rust et débloquer la suite du parcours.";
+      ? "Connectez-vous pour retrouver vos exercices réussis, votre XP et le niveau à reprendre."
+      : "Créez un compte pour enregistrer votre progression et accéder à la suite du parcours.";
 
   const buttonLabel = mode === "login" ? "Se connecter" : "Créer le compte";
 
@@ -67,7 +67,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             return;
           } catch {
             setErrorMessage(
-              "Connexion réussie, mais la réussite invitée n’a pas pu être sauvegardée. Réessayez dans un instant.",
+              "Connexion réussie, mais la progression invitée n’a pas encore été enregistrée. Réessayez dans un instant.",
             );
             router.refresh();
             return;
@@ -95,7 +95,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       }
 
       setMessage(
-        "Compte créé. Si la confirmation email est activée dans Supabase, vérifiez votre boîte mail avant de vous connecter.",
+        "Compte créé. Vérifiez votre email si la confirmation est activée, puis connectez-vous.",
       );
       router.push(`/auth/login?next=${encodeURIComponent(nextPath)}`);
       router.refresh();

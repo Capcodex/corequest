@@ -1,11 +1,7 @@
 import { notFound } from "next/navigation";
 import { TrackEventOnMount } from "@/components/analytics/TrackEventOnMount";
-import { ExerciseBlock } from "@/components/level/ExerciseBlock";
-import { HintBox } from "@/components/level/HintBox";
-import { LessonBlock } from "@/components/level/LessonBlock";
+import { LevelExperience } from "@/components/level/LevelExperience";
 import { LevelHeader } from "@/components/level/LevelHeader";
-import { LevelPlayground } from "@/components/level/LevelPlayground";
-import { MissionBlock } from "@/components/level/MissionBlock";
 import { getLevelById } from "@/lib/levels/getLevelById";
 import { getLevels } from "@/lib/levels/getLevels";
 import { getNextLevelId } from "@/lib/progress/progressRules";
@@ -26,7 +22,7 @@ export default async function LevelPage({ params }: LevelPageProps) {
   }
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8">
       <TrackEventOnMount
         eventName="level_viewed"
         properties={{
@@ -35,19 +31,8 @@ export default async function LevelPage({ params }: LevelPageProps) {
           pathId: level.pathId,
         }}
       />
-      <div className="space-y-6">
-        <LevelHeader level={level} />
-        <MissionBlock missionText={level.missionText} concept={level.concept} />
-        <LessonBlock
-          exampleCode={level.exampleCode}
-          lessonSections={level.lessonSections}
-        />
-        <ExerciseBlock instructions={level.instructions} expectedOutput={level.expectedOutput} />
-        <HintBox hint={level.hint} />
-      </div>
-      <div className="lg:sticky lg:top-24 lg:self-start">
-        <LevelPlayground level={level} nextLevelId={nextLevelId} />
-      </div>
+      <LevelHeader level={level} />
+      <LevelExperience level={level} nextLevelId={nextLevelId} />
     </div>
   );
 }

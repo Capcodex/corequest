@@ -6,8 +6,14 @@ import type { SandboxExecutionRequest } from "./types.ts";
 const port = Number.parseInt(process.env.PORT ?? "4000", 10);
 
 const server = createServer(async (request, response) => {
-  if (request.method === "GET" && request.url === "/health") {
+  if ((request.method === "GET" || request.method === "HEAD") && request.url === "/health") {
     response.writeHead(200, { "Content-Type": "application/json" });
+
+    if (request.method === "HEAD") {
+      response.end();
+      return;
+    }
+
     response.end(JSON.stringify({ ok: true, service: "sandbox-service" }));
     return;
   }

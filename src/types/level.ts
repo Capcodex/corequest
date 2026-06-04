@@ -1,4 +1,4 @@
-export type LessonSection = {
+﻿export type LessonSection = {
   heading: string;
   content: string;
 };
@@ -14,7 +14,6 @@ export type Level = {
   lessonSections: LessonSection[];
   exampleCode: string;
   instructions: string[];
-  starterCode: string;
   expectedOutput: string;
   hint: string;
   xpReward: number;

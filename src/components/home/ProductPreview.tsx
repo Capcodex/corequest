@@ -7,23 +7,23 @@ export function ProductPreview() {
     <section className="mx-auto max-w-7xl px-4">
       <Card className="grid gap-8 p-8 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-4">
-          <p className="text-sm uppercase tracking-[0.24em] text-muted">Aperçu MVP</p>
+          <p className="text-sm uppercase tracking-[0.24em] text-muted">Aperçu produit</p>
           <h2 className="text-3xl font-semibold text-foreground">
-            Un niveau rassemble mission, cours, exercice, code et validation.
+            Chaque niveau réunit notion, exercice, exécution et validation.
           </h2>
           <p className="text-base leading-8 text-muted">
-            Le MVP doit tester la boucle complète, pas seulement une page marketing :
-            on prépare déjà la page de niveau, l&apos;éditeur et le branchement sandbox.
+            CoreQuest ne se limite pas à du contenu théorique : chaque étape se valide avec du
+            vrai code Rust exécuté en sandbox.
           </p>
         </div>
         <div className="rounded-3xl border border-border bg-panelAlt p-6">
-          <p className="text-sm uppercase tracking-[0.24em] text-muted">Prêt à entrer ?</p>
+          <p className="text-sm uppercase tracking-[0.24em] text-muted">Accès rapide</p>
           <p className="mt-4 text-sm leading-7 text-muted">
-            Le niveau 1 reste accessible sans compte pour démarrer vite.
+            Le niveau 1 reste accessible sans compte pour démarrer immédiatement.
           </p>
           <div className="mt-6">
             <Button asChild>
-              <Link href="/levels/rust-level-1">Lancer le niveau 1</Link>
+              <Link href="/levels/rust-level-1">Ouvrir le niveau 1</Link>
             </Button>
           </div>
         </div>

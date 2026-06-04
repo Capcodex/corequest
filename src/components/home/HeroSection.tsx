@@ -12,15 +12,14 @@ export function HeroSection() {
       <Card className="overflow-hidden p-8 md:p-12">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
           <div className="space-y-6">
-            <Badge>Parcours Rust MVP</Badge>
+            <Badge>Parcours Rust</Badge>
             <div className="space-y-4">
               <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-foreground md:text-6xl">
-                Apprenez Rust avec une vraie boucle de code, de compilation et de correction.
+                Apprenez Rust avec une boucle réelle de code, d’exécution et de correction.
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-muted">
-                CoreQuest transforme l&apos;apprentissage Rust en progression scénarisée :
-                vous lisez, vous codez, vous exécutez, vous comprenez l&apos;erreur, puis
-                vous débloquez la suite.
+                CoreQuest structure l’apprentissage Rust autour d’exercices courts, d’une exécution
+                isolée en sandbox et d’un déblocage progressif niveau par niveau.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -36,7 +35,7 @@ export function HeroSection() {
                   })
                 }
               >
-                <Link href="/onboarding">Commencer l&apos;aventure</Link>
+                <Link href="/onboarding">Commencer le parcours</Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
                 <Link href="/levels/rust-level-1">Ouvrir le niveau 1</Link>
@@ -44,14 +43,14 @@ export function HeroSection() {
             </div>
           </div>
           <div className="rounded-3xl border border-border bg-panelAlt p-6">
-            <p className="text-sm uppercase tracking-[0.26em] text-muted">Boucle cœur MVP</p>
+            <p className="text-sm uppercase tracking-[0.26em] text-muted">Boucle d’apprentissage</p>
             <ul className="mt-5 space-y-4 text-sm text-foreground">
-              <li>1. Comprendre un concept Rust ciblé</li>
-              <li>2. Modifier le code dans l&apos;éditeur</li>
+              <li>1. Comprendre une notion Rust ciblée</li>
+              <li>2. Écrire la solution dans l’éditeur</li>
               <li>3. Compiler et exécuter en sandbox</li>
-              <li>4. Lire `stdout`, `stderr` ou l&apos;erreur</li>
-              <li>5. Corriger et réussir</li>
-              <li>6. Débloquer le niveau suivant</li>
+              <li>4. Lire la sortie ou l’erreur</li>
+              <li>5. Corriger jusqu’à validation</li>
+              <li>6. Déverrouiller le niveau suivant</li>
             </ul>
           </div>
         </div>
