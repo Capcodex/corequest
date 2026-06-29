@@ -9,12 +9,16 @@ type CrabMilestone = {
 export const CRAB_LEVEL_MILESTONES: CrabMilestone[] = [
   { level: 1, minXp: 0, title: "Moussaillon" },
   { level: 2, minXp: 75, title: "Éclaireur" },
-  { level: 3, minXp: 195, title: "Pisteur" },
-  { level: 4, minXp: 360, title: "Navigateur" },
-  { level: 5, minXp: 570, title: "Technicien" },
-  { level: 6, minXp: 825, title: "Stratège" },
-  { level: 7, minXp: 1125, title: "Gardien" },
-  { level: 8, minXp: 1350, title: "Légende" },
+  { level: 3, minXp: 260, title: "Pisteur" },
+  { level: 4, minXp: 520, title: "Navigateur" },
+  { level: 5, minXp: 825, title: "Technicien" },
+  { level: 6, minXp: 1240, title: "Stratège" },
+  { level: 7, minXp: 1820, title: "Gardien" },
+  { level: 8, minXp: 2680, title: "Cartographe" },
+  { level: 9, minXp: 3720, title: "Architecte" },
+  { level: 10, minXp: 4900, title: "Orchestrateur" },
+  { level: 11, minXp: 6100, title: "Noyau" },
+  { level: 12, minXp: 7420, title: "Légende" },
 ];
 
 export function getCrabProgress(xpTotal: number): CrabProgress {

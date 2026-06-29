@@ -1,20 +1,4 @@
-﻿export type LessonSection = {
-  heading: string;
-  content: string;
-};
+import type { ExerciseContent, LessonSection } from "@/types/content";
 
-export type Level = {
-  id: string;
-  pathId: string;
-  orderIndex: number;
-  title: string;
-  concept: string;
-  summary: string;
-  missionText: string;
-  lessonSections: LessonSection[];
-  exampleCode: string;
-  instructions: string[];
-  expectedOutput: string;
-  hint: string;
-  xpReward: number;
-};
+export type { LessonSection };
+export type Level = ExerciseContent;

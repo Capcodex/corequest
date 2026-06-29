@@ -14,10 +14,14 @@ Si le schéma `public` de votre projet Supabase est vide, appliquez le bootstrap
    - `profiles`
    - `user_progress`
    - `level_completions`
+   - `project_completions`
+   - `review_items`
+   - `review_attempts`
    - `submissions`
    - `analytics_events`
    - `premium_interest`
    - `complete_level(...)`
+   - `complete_project(...)`
 5. créer un nouvel utilisateur test, puis terminer le niveau 1.
 
 ## Symptômes typiques si le schéma manque
@@ -30,3 +34,4 @@ Si le schéma `public` de votre projet Supabase est vide, appliquez le bootstrap
 ## Note
 
 Je peux préparer le SQL et le repo local, mais je ne peux pas exécuter ce SQL sur votre instance Supabase distante sans accès admin / SQL Editor.
+

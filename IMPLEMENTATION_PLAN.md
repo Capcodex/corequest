@@ -1,607 +1,335 @@
-# Plan d’implémentation — Refonte du parcours pédagogique CoreQuest
+# Plan d?impl?mentation ? Niveaux 4, 5 et 6 de CoreQuest
 
 ## Objectif
 
-Faire évoluer CoreQuest d’un MVP centré sur de petits exercices Rust vers un produit d’apprentissage structuré en :
+?tendre CoreQuest au-del? du Niveau 3 avec un parcours long, coh?rent et progressif, sans casser les fondations d?j? pos?es :
 
-- chapitres progressifs ;
-- séries de problèmes ;
-- paliers de validation ;
-- projets de synthèse plus ambitieux ;
-- deux modes de pratique distincts : `exercice` et `projet`.
+- chapitres courts et lisibles ;
+- exercices algorithmiques de plus en plus structurants ;
+- gates explicites entre niveaux ;
+- un projet de synth?se par niveau ;
+- une progression XP et produit qui reste lisible jusqu?? la fin du parcours.
 
-Le principe clé est le suivant :
-
-1. les exercices courts restent réalisés dans l’éditeur Rust simple ;
-2. les projets de fin de thématique basculent dans un mode `IDE` plus riche ;
-3. le déblocage des niveaux supérieurs dépend de la validation du niveau précédent.
+Le but n?est pas seulement d?ajouter du volume, mais d?installer une mont?e en difficult? ma?tris?e jusqu?au bloc avanc? final.
 
 ---
 
-## Vision produit
+## Principes de cadrage
 
-CoreQuest ne doit plus être pensé uniquement comme une suite de niveaux, mais comme un **parcours d’apprentissage complet** :
+### 1. Niveau = grande marche de comp?tence
 
-- un socle de syntaxe et de logique ;
-- une montée progressive vers l’algorithmique ;
-- des validations intermédiaires ;
-- de gros projets de sortie de thème ;
-- une interface capable de différencier clairement entraînement guidé et travail de construction.
+- `Niveau 4` : choisir une m?thode et manipuler des structures classiques ;
+- `Niveau 5` : reconna?tre et appliquer les grandes familles d?algorithmes ;
+- `Niveau 6` : consolider les sujets avanc?s et finir sur un entra?nement dense.
 
-Le produit cible ressemble donc à un mélange entre :
+### 2. Chapitre = lecture courte + pratique directe
 
-- plateforme de progression structurée ;
-- laboratoire de pratique ;
-- mini-environnement de développement pour les projets.
+Chaque chapitre doit rester compact :
 
----
+- une introduction ;
+- quelques points ? retenir ;
+- une s?rie d?exercices ;
+- ?ventuellement un gate de validation.
 
-## Nouvelle structure pédagogique cible
+### 3. Projet = validation forte du niveau
 
-## Hiérarchie canonique
+Chaque niveau 4, 5 et 6 doit se terminer par un projet :
 
-Le contenu doit être réorganisé selon cette hiérarchie :
+- plus long qu?un exercice ;
+- multi-fichiers ;
+- ex?cut? dans la sandbox projet ;
+- valid? par sc?narios/tests ;
+- assez significatif pour servir de synth?se r?elle.
 
-- `Parcours`
-- `Niveau`
-- `Thématique`
-- `Chapitre`
-- `Exercice` ou `Projet`
+### 4. D?blocage = validation r?elle du niveau pr?c?dent
 
-### Définition des unités
+Le niveau sup?rieur ne s?ouvre que si :
 
-#### 1. Niveau
-
-Le `niveau` correspond à un grand palier de progression.
-
-Exemples :
-
-- Niveau 1 : bases impératives ;
-- Niveau 2 : structures, chaînes et fonctions ;
-- Niveau 3 : algorithmique intermédiaire ;
-- Niveau 4 : structures classiques et graphes ;
-- Niveau 5 : algorithmes fondamentaux avancés ;
-- Niveau 6 : sujets avancés et entraînement final.
-
-#### 2. Thématique
-
-La `thématique` est un bloc cohérent de savoir-faire.
-
-Exemples :
-
-- affichage et suite d’instructions ;
-- répétitions ;
-- tableaux ;
-- fonctions ;
-- graphes ;
-- programmation dynamique.
-
-#### 3. Chapitre
-
-Le `chapitre` est une unité de lecture + pratique.
-
-Un chapitre contient généralement :
-
-- une introduction courte ;
-- des notions à retenir ;
-- une série d’exercices ;
-- éventuellement un mini-bilan.
-
-#### 4. Exercice
-
-L’`exercice` reste le mode le plus rapide et le plus fréquent.
-
-Il repose sur :
-
-- un énoncé ;
-- une sortie ou un comportement attendu ;
-- un éditeur simple ;
-- une exécution rapide ;
-- une correction immédiate.
-
-#### 5. Projet
-
-Le `projet` est une validation forte de sortie de thématique ou de niveau.
-
-Il peut inclure :
-
-- plusieurs fichiers ;
-- une arborescence ;
-- des consignes plus ouvertes ;
-- des tests ;
-- un comportement global à produire.
+- les chapitres requis du niveau pr?c?dent sont valid?s ;
+- le gate final du niveau pr?c?dent est franchi ;
+- la logique de progression reste compr?hensible c?t? map et dashboard.
 
 ---
 
-## Interprétation des niveaux fournis
+## Niveau 4 ? Structures et m?thodes
 
-Les niveaux que vous avez listés doivent être pris comme **charpente pédagogique cible**.
+## Intention p?dagogique
 
-Ils sont indicatifs sur la forme, mais très utiles pour définir la profondeur attendue.
+Faire passer l?utilisateur de la r?solution locale d?un exercice ? une logique de m?thode.
 
-### Niveau 1 — Fondamentaux
+Il ne s?agit plus seulement de coder une r?ponse correcte, mais de :
 
-Couvre :
+- choisir une structure adapt?e ;
+- d?couper le probl?me ;
+- reconna?tre un sch?ma de r?solution ;
+- commencer ? raisonner en termes de parcours, arbre, graphe, r?cursivit?.
 
-- affichage de texte ;
-- suites d’instructions ;
-- répétitions ;
-- calculs ;
-- variables ;
-- lecture de l’entrée ;
-- conditions ;
-- structures avancées ;
-- opérateurs booléens ;
-- répétitions conditionnées.
+## Th?matiques cibles
 
-### Niveau 2 — Outils de base
-
-Couvre :
-
-- nombres à virgule ;
-- tableaux ;
-- chaînes de caractères ;
-- fonctions ;
-- programmation sur son ordinateur.
-
-### Niveau 3 — Algorithmique intermédiaire
-
-Couvre :
-
-- complexité ;
-- caractères ;
-- chaînes avancées ;
-- tableaux avancés ;
-- tris simples ;
-- balayages ;
-- récursivité ;
-- efficacité temporelle ;
-- exercices d’entraînement.
-
-### Niveau 4 — Structures et méthodes
-
-Couvre :
-
-- méthodes de code propre ;
+- m?thodes : coder proprement et efficacement ;
 - arbres ;
-- structures de données ;
-- récursivité avancée ;
-- géométrie (1) ;
+- structures de donn?es et balayages ;
+- r?cursivit? avanc?e ;
+- calculs g?om?triques (1) ;
 - graphes ;
-- algorithmes semi-numériques (1) ;
-- graphes implicites (1).
+- algorithmes semi-num?riques (1) ;
+- graphes implicites (1) ;
+- entra?nement de fin de niveau.
 
-### Niveau 5 — Algorithmes classiques avancés
+## Forme recommand?e
 
-Couvre :
+- `6 ? 8` chapitres r?els ;
+- `3 ? 5` exercices par chapitre ;
+- `1` gate interm?diaire apr?s les th?mes les plus structurants ;
+- `1` projet final obligatoire.
 
-- gloutons ;
-- diviser pour régner ;
+## Projet de synth?se recommand?
+
+### Projet Niveau 4 ? Explorateur de carte
+
+Projet multi-fichiers autour de :
+
+- lecture d?une carte ;
+- parcours de structure ;
+- r?gles de d?placement ;
+- restitution d?un r?sultat de navigation ou d?exploration.
+
+Ce projet doit mobiliser :
+
+- structures simples ;
+- parcours ;
+- d?coupage du code ;
+- validation par sc?narios.
+
+## Risque principal
+
+Le saut entre Niveau 3 et Niveau 4 peut ?tre brutal si l?on introduit trop vite graphes, r?cursivit? avanc?e et g?om?trie sans sas p?dagogique.
+
+## Crit?re de r?ussite
+
+? la fin du Niveau 4, l?utilisateur doit savoir choisir une approche raisonnable parmi plusieurs outils classiques.
+
+---
+
+## Niveau 5 ? Algorithmes fondamentaux avanc?s
+
+## Intention p?dagogique
+
+Faire entrer l?utilisateur dans les grandes familles d?algorithmes attendues sur des probl?mes plus s?rieux.
+
+Le niveau doit lui apprendre ? reconna?tre :
+
+- quand un glouton est pertinent ;
+- quand il faut diviser le probl?me ;
+- quand utiliser une structure d?arbre ;
+- quand un graphe ou une programmation dynamique devient le bon cadre.
+
+## Th?matiques cibles
+
+- algorithmes gloutons ;
+- diviser pour r?gner ;
 - arbres binaires ;
 - tris efficaces ;
 - plus courts chemins ;
 - union-find ;
-- algorithmes semi-numériques (2) ;
-- programmation dynamique.
+- algorithmes semi-num?riques (2) ;
+- algorithmes dynamiques ;
+- entra?nement de fin de niveau.
 
-### Niveau 6 — Avancé
+## Forme recommand?e
 
-Couvre :
+- `6 ? 8` chapitres ;
+- `3 ? 4` exercices par chapitre ;
+- un peu plus de densit? conceptuelle que le Niveau 4 ;
+- `1` projet final plus ouvert que celui du Niveau 4.
+
+## Projet de synth?se recommand?
+
+### Projet Niveau 5 ? Moteur d?optimisation
+
+Projet multi-fichiers autour de :
+
+- choix d?une strat?gie de r?solution ;
+- agr?gation de donn?es ;
+- optimisation d?un r?sultat ;
+- sc?narios de validation multiples.
+
+Ce projet doit pousser l?utilisateur ? choisir une famille algorithmique adapt?e, pas seulement ? traduire une consigne brute.
+
+## Risque principal
+
+Le niveau peut devenir trop th?orique si les exercices n?explicitent pas assez le ?quand utiliser quoi?.
+
+## Crit?re de r?ussite
+
+? la fin du Niveau 5, l?utilisateur doit mieux reconna?tre la famille algorithmique adapt?e ? un probl?me donn?.
+
+---
+
+## Niveau 6 ? Avanc? et entra?nement final
+
+## Intention p?dagogique
+
+Consolider les th?mes les plus exigeants et fermer le parcours avec un vrai bloc d?entra?nement autonome.
+
+Le Niveau 6 n?est pas un simple appendice : c?est la phase o? l?utilisateur doit commencer ? encha?ner des probl?mes denses avec moins de guidage.
+
+## Th?matiques cibles
 
 - graphes implicites (2) ;
-- programmation dynamique avancée ;
-- structures et balayages avancés ;
+- algorithmes dynamiques avanc?s ;
+- structures de donn?es et balayages avanc?s ;
 - composantes fortement connexes ;
-- géométrie (2) ;
+- calculs g?om?triques (2) ;
 - flots et couplages ;
-- entraînement final.
+- entra?nement final.
+
+## Forme recommand?e
+
+- `5 ? 7` chapitres ? forte densit? ;
+- `3 ? 4` exercices par chapitre ;
+- un bloc final d?entra?nement plus libre ;
+- `1` projet final le plus ambitieux du parcours.
+
+## Projet de synth?se recommand?
+
+### Projet Niveau 6 ? Solveur avanc?
+
+Projet multi-fichiers autour de :
+
+- un probl?me plus riche ;
+- plusieurs modules ;
+- plusieurs sc?narios de validation ;
+- une ex?cution suffisamment longue pour justifier le mode projet ;
+- une vraie sensation d?aboutissement de parcours.
+
+## Risque principal
+
+Le niveau peut devenir intimidant si la lisibilit? produit n??volue pas en parall?le : map, dashboard et mode projet doivent rester tr?s clairs.
+
+## Crit?re de r?ussite
+
+? la fin du Niveau 6, l?utilisateur doit pouvoir traiter des probl?mes complexes avec une autonomie nettement plus forte qu?au d?but du produit.
 
 ---
 
-## Règle pédagogique structurante
+## Chantiers transverses n?cessaires
 
-### 1. Sortie de grosse thématique = projet
+Ces trois niveaux ne doivent pas ?tre produits comme de simples ajouts de contenu. Ils impliquent aussi un travail transversal.
 
-À la sortie de chaque grosse thématique, il faut prévoir un **projet de synthèse**, pas seulement un exercice supplémentaire.
+## 1. Contenu
 
-Exemples :
+? faire :
 
-- fin des bases d’entrée/sortie → petit moteur de console ;
-- fin des tableaux/chaînes → analyseur de texte ;
-- fin des fonctions → mini-application modulaire ;
-- fin des graphes → explorateur de cartes ;
-- fin de la programmation dynamique → solveur de puzzle ;
-- fin de niveau → projet de consolidation.
+- d?finir les chapitres canoniques de chaque niveau ;
+- ?crire les s?ries d?exercices ;
+- d?finir les gates ;
+- d?finir les projets finaux ;
+- calibrer difficult? et dur?e.
 
-### 2. Déblocage par validation réelle
+## 2. Progression
 
-Le déblocage doit reposer sur des validations explicites :
+? faire :
 
-- validation de chapitres ;
-- validation de projets ;
-- validation du niveau précédent.
+- ajouter les r?gles d?ouverture Niveau 4 ? 5 ? 6 ;
+- v?rifier les ?tats visibles sur la map ;
+- v?rifier les recommandations du dashboard ;
+- s?assurer que les projets restent visibles sans brouiller la reprise principale.
 
-La logique cible :
+## 3. Sandbox projet
 
-- le Niveau 3 ne s’ouvre qu’après validation du Niveau 2 ;
-- idem pour les niveaux 4, 5 et 6 ;
-- un projet peut être obligatoire pour clôturer un niveau.
+? faire :
 
----
+- confirmer que les projets N4/N5/N6 restent dans le p?rim?tre s?r ;
+- contr?ler la dur?e d?ex?cution ;
+- limiter le poids des workspaces ;
+- garder la validation par tests/sc?narios simple ? maintenir.
 
-## Deux modes de pratique à maintenir
+## 4. UX du mode projet
 
-## Mode 1 — Exercice
+? faire :
 
-Le mode `exercice` conserve l’éditeur simple actuel.
+- garder une arborescence simple ;
+- mieux s?parer consignes, fichiers et r?sultats ;
+- supporter le mode desktop d?abord ;
+- pr?voir une d?gradation propre sur ?crans plus petits.
 
-Il reste adapté aux cas suivants :
+## 5. Calibration XP
 
-- sorties attendues courtes ;
-- exercices d’application immédiate ;
-- répétition rapide ;
-- progression fine par petits pas.
+? faire :
 
-### Capacités attendues
-
-- éditeur mono-fichier ;
-- exécution rapide ;
-- validation automatique ;
-- feedback immédiat ;
-- historique de réussite.
-
-## Mode 2 — Projet
-
-Le mode `projet` introduit un **mini-IDE**.
-
-Il ne remplace pas l’éditeur simple : il vient le compléter pour les gros jalons.
-
-### Capacités attendues
-
-- arborescence de fichiers ;
-- ouverture d’onglets ;
-- édition multi-fichiers ;
-- fichier principal + modules ;
-- exécution du projet complet ;
-- tests automatiques ;
-- éventuelle vue consignes / fichiers / terminal.
-
-### UX cible du mode projet
-
-Le mode projet doit donner l’impression de construire un vrai petit programme, sans chercher à reproduire un IDE complet de bureau.
-
-Il faut viser :
-
-- une arborescence simple ;
-- une navigation claire ;
-- une exécution fiable ;
-- une compréhension immédiate de ce qui est attendu.
-
-À éviter :
-
-- complexité excessive ;
-- fonctionnalités gadget ;
-- surcharger le MVP avec des outils de développeur avancés inutiles.
+- ?viter une inflation artificielle ;
+- faire correspondre les paliers du crabe au volume r?el de contenu ;
+- garder une progression lisible entre Niveau 4 et Niveau 6 ;
+- faire du projet un moment fort, sans qu?il d?s?quilibre tout le syst?me.
 
 ---
 
-## Évolution de l’architecture contenu
+## Ordre d?impl?mentation recommand?
 
-Le modèle actuel centré sur une liste plate de niveaux doit évoluer.
+## P8 ? Niveau 4 complet
 
-## Nouveau modèle de contenu cible
+Objectif : livrer le premier niveau ?structures et m?thodes? de fa?on compl?te.
 
-Chaque entrée de contenu devrait pouvoir porter au minimum :
+? faire :
 
-- `id`
-- `levelNumber`
-- `themeId`
-- `chapterId`
-- `title`
-- `type` : `lesson`, `exercise`, `project`, `gate`
-- `difficulty`
-- `estimatedDuration`
-- `xpReward`
-- `unlockRules`
-- `lessonContent`
-- `exerciseConfig`
-- `projectConfig`
+1. structurer le curriculum Niveau 4 ;
+2. cr?er les chapitres ;
+3. ?crire les exercices ;
+4. ajouter les gates ;
+5. livrer le projet de synth?se Niveau 4 ;
+6. brancher la progression et les ?tats visibles.
 
-### Pour un exercice
+## P9 ? Niveau 5 complet
 
-Prévoir des champs comme :
+Objectif : introduire les familles d?algorithmes fondamentales sans casser le rythme.
 
-- `expectedOutput`
-- `stdin`
-- `validationMode`
-- `hint`
-- `starterMode` = vide
-- `solutionKey`
+? faire :
 
-### Pour un projet
+1. structurer le curriculum Niveau 5 ;
+2. ?crire les chapitres majeurs ;
+3. densifier les exercices m?thodologiques ;
+4. livrer le projet de synth?se Niveau 5 ;
+5. recalibrer les paliers XP interm?diaires.
 
-Prévoir des champs comme :
+## P10 ? Niveau 6 complet
 
-- `files`
-- `entryFile`
-- `editableFiles`
-- `readonlyFiles`
-- `tests`
-- `runCommand`
-- `projectGoals`
-- `acceptanceCriteria`
+Objectif : fermer le parcours long avec le bloc avanc? et l?entra?nement final.
 
----
+? faire :
 
-## Évolution de la sandbox Rust
+1. structurer le curriculum Niveau 6 ;
+2. ?crire les chapitres avanc?s ;
+3. ajouter le bloc d?entra?nement final ;
+4. livrer le projet final ;
+5. v?rifier la coh?rence de fin de parcours.
 
-La sandbox actuelle est adaptée aux exercices mono-fichier.
+## P11 ? Calibration transverse finale
 
-Les projets imposent une montée en capacité.
+Objectif : stabiliser le produit complet apr?s ajout des niveaux 4 ? 6.
 
-## Capacités à ajouter
+? faire :
 
-### 1. Lecture de l’entrée standard
-
-Indispensable pour une grande partie des problèmes algorithmiques.
-
-### 2. Exécution multi-fichiers
-
-Nécessaire pour les projets structurés.
-
-### 3. Support Cargo encadré
-
-Pour les projets, il faut pouvoir exécuter un petit workspace contrôlé.
-
-### 4. Validation par tests
-
-Les projets ne doivent pas dépendre uniquement d’une sortie console exacte.
-
-Il faut ajouter des validations de type :
-
-- tests unitaires ;
-- exécutions de scénarios ;
-- snapshots contrôlés ;
-- critères de complétion.
-
-### 5. Sécurité
-
-La sandbox reste une contrainte absolue.
-
-Le passage en multi-fichiers ne doit pas ouvrir :
-
-- accès réseau ;
-- dépendances arbitraires ;
-- escape du conteneur ;
-- exécution non bornée.
+1. v?rifier les d?blocages 4 ? 5 ? 6 ;
+2. recalibrer XP, dur?e et difficult? ;
+3. v?rifier la lisibilit? map/dashboard ;
+4. v?rifier le mode projet sur desktop puis formats plus petits ;
+5. finaliser la documentation de pilotage.
 
 ---
 
-## Évolution produit / UX
+## Priorit? imm?diate recommand?e
 
-## Écran de progression
+La meilleure suite n?est pas d?ouvrir les trois niveaux d?un coup.
 
-La carte de progression doit évoluer pour représenter plusieurs types d’éléments :
+La priorit? recommand?e est :
 
-- chapitres ;
-- exercices ;
-- portes de déblocage ;
-- projets ;
-- niveaux verrouillés.
+1. livrer un `Niveau 4` complet et jouable ;
+2. valider la charge UX et sandbox de son projet ;
+3. seulement ensuite d?rouler `Niveau 5`, puis `Niveau 6`.
 
-### États à représenter
+Autrement dit :
 
-- non commencé ;
-- en cours ;
-- validé ;
-- projet à faire ;
-- verrouillé ;
-- niveau débloqué.
-
-## Écran de contenu
-
-L’écran de contenu doit pouvoir rendre :
-
-- un chapitre avec lecture + série d’exercices ;
-- un exercice unitaire ;
-- un projet avec IDE ;
-- une porte de déblocage.
-
-## Tableau de bord
-
-Le dashboard doit évoluer pour afficher :
-
-- niveau actuel ;
-- chapitre en cours ;
-- prochain projet ;
-- taux de validation du niveau ;
-- projets terminés ;
-- progression globale.
-
----
-
-## Stratégie d’implémentation recommandée
-
-## Phase 1 — Refondre le modèle pédagogique
-
-Objectif : préparer la suite sans encore tout reconstruire visuellement.
-
-À faire :
-
-1. définir la hiérarchie `niveau > thématique > chapitre > contenu` ;
-2. définir les types `exercise` / `project` / `gate` ;
-3. définir les règles de déblocage ;
-4. définir les métadonnées minimales ;
-5. préparer un premier jeu de données pilote.
-
-## Phase 2 — Refondre le moteur de contenu
-
-Objectif : rendre l’application capable de charger autre chose qu’une simple liste plate de niveaux.
-
-À faire :
-
-1. refactorer les types TypeScript ;
-2. refactorer les helpers de lecture de contenu ;
-3. adapter la progression utilisateur ;
-4. adapter la logique d’XP ;
-5. adapter la carte de progression.
-
-## Phase 3 — Supporter les vrais exercices algorithmiques
-
-Objectif : préparer les chapitres proches d’un entraînement plus académique.
-
-À faire :
-
-1. ajouter la gestion de `stdin` ;
-2. ajouter plusieurs modes de validation ;
-3. fiabiliser les retours d’exécution ;
-4. préparer des problèmes plus proches des listes fournies.
-
-## Phase 4 — Introduire le mode projet
-
-Objectif : livrer le premier vrai projet de synthèse.
-
-À faire :
-
-1. définir le modèle `projectConfig` ;
-2. créer l’UI mini-IDE ;
-3. supporter multi-fichiers ;
-4. exécuter un projet complet ;
-5. valider par tests.
-
-## Phase 5 — Refaire la progression pédagogique de Niveau 1
-
-Objectif : passer du MVP actuel à une vraie première marche d’apprentissage.
-
-À faire :
-
-1. reconstruire le Niveau 1 en chapitres ;
-2. créer plusieurs problèmes par chapitre ;
-3. ajouter au moins un projet de fin de grande thématique ;
-4. recalibrer XP, déblocages et rythme.
-
-## Phase 6 — Étendre au Niveau 2
-
-Objectif : stabiliser la mécanique avant les niveaux plus algorithmiques.
-
-À faire :
-
-1. tableaux ;
-2. chaînes ;
-3. fonctions ;
-4. premier usage plus fréquent des entrées ;
-5. projet de synthèse niveau 2.
-
-## Phase 7 — Ouvrir les niveaux 3 à 6
-
-Objectif : transformer CoreQuest en vrai parcours long.
-
-À faire :
-
-1. intégrer les portes de déblocage ;
-2. structurer les thèmes algorithmiques ;
-3. ajouter projets ou entraînements de sortie ;
-4. calibrer la difficulté sur la durée.
-
----
-
-## Première cible réaliste
-
-La meilleure prochaine cible n’est pas de produire immédiatement les 6 niveaux complets.
-
-La cible recommandée est :
-
-### Lot A — Fondations du nouveau système
-
-- nouveau modèle de contenu ;
-- nouveaux types ;
-- support des chapitres ;
-- support des exercices avec entrée ;
-- nouvelle progression ;
-- refonte du Niveau 1.
-
-### Lot B — Premier projet
-
-- mode projet ;
-- mini-IDE ;
-- sandbox multi-fichiers ;
-- premier projet de synthèse jouable.
-
-### Lot C — Extension du catalogue
-
-- Niveau 2 complet ;
-- premiers jalons Niveau 3 ;
-- rééquilibrage global.
-
----
-
-## Décisions structurantes à prendre
-
-### 1. Positionnement du Rust
-
-Il faut décider explicitement si CoreQuest reste :
-
-- un parcours d’apprentissage Rust ;
-- ou un parcours d’algorithmique enseigné via Rust.
-
-Avec votre nouvelle liste, on s’oriente clairement vers :
-
-**algorithmique + programmation structurée via Rust**.
-
-### 2. Place des projets
-
-Il faut décider si les projets sont :
-
-- obligatoires pour valider une thématique ;
-- obligatoires seulement pour valider un niveau ;
-- ou facultatifs avec bonus.
-
-Recommandation :
-
-- projet obligatoire pour clôturer les grosses thématiques structurantes ;
-- projet final obligatoire pour clôturer un niveau.
-
-### 3. Granularité des exercices
-
-Il faut éviter de transformer chaque concept en une seule carte trop lourde.
-
-Recommandation :
-
-- plusieurs petits exercices ;
-- puis un projet de synthèse.
-
----
-
-## Risques principaux
-
-- explosion du volume de contenu si le modèle n’est pas industrialisé ;
-- sandbox trop limitée pour les projets si le multi-fichiers arrive trop tard ;
-- UX confuse si exercice et projet ne sont pas clairement séparés ;
-- surcharge produit si l’on tente de bâtir un IDE trop complet ;
-- difficulté mal calibrée entre les niveaux 2 et 3.
-
----
-
-## Critères de réussite
-
-Le nouveau plan sera considéré comme correctement implémenté si :
-
-- le produit distingue clairement `exercice` et `projet` ;
-- la progression n’est plus une simple liste plate de niveaux ;
-- le Niveau 1 devient un vrai parcours découpé en chapitres ;
-- les projets de synthèse existent et sont réellement différenciants ;
-- la sandbox supporte les besoins du parcours ;
-- les niveaux supérieurs se débloquent par validation réelle du précédent.
-
----
-
-## Priorité immédiate recommandée
-
-La prochaine étape à exécuter n’est pas encore la production massive de contenu.
-
-La priorité immédiate est :
-
-1. figer le **modèle de contenu** ;
-2. figer le **modèle de progression** ;
-3. définir le **contrat technique du mode projet / IDE** ;
-4. reconstruire ensuite le **Niveau 1** sur cette base.
+- `Niveau 4` doit servir de niveau de r?f?rence ;
+- `Niveau 5` doit servir de niveau de densification ;
+- `Niveau 6` doit servir de cl?ture ambitieuse du parcours.

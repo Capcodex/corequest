@@ -113,7 +113,12 @@ export function LevelExperience({ level, nextLevelId }: LevelExperienceProps) {
         <div className="grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)]">
           <div className="space-y-6">
             <MissionBlock missionText={level.missionText} concept={level.concept} />
-            <ExerciseBlock instructions={level.instructions} expectedOutput={level.expectedOutput} />
+            <ExerciseBlock
+              instructions={level.instructions}
+              expectedOutput={level.expectedOutput}
+              stdin={level.stdin ?? null}
+              validationMode={level.validation.mode}
+            />
             <HintBox hint={level.hint} />
           </div>
           <div className="lg:sticky lg:top-24 lg:self-start">

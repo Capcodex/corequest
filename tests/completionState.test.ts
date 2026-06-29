@@ -37,16 +37,16 @@ describe("buildCompletionState", () => {
   it("keeps the current level when there is no next level", () => {
     expect(
       buildCompletionState({
-        currentLevelId: "rust-level-20",
-        levelId: "rust-level-20",
+        currentLevelId: "rust-level-31",
+        levelId: "rust-level-31",
         nextLevelId: null,
-        xpAward: 115,
+        xpAward: 120,
         xpGranted: true,
-        xpTotal: 320,
+        xpTotal: 2140,
       }),
     ).toEqual({
-      currentLevelId: "rust-level-20",
-      xpTotal: 435,
+      currentLevelId: "rust-level-31",
+      xpTotal: 2260,
     });
   });
 });

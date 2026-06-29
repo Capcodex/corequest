@@ -270,3 +270,166 @@ end;
 $$;
 
 grant execute on function public.complete_level(text, integer, text) to authenticated;
+
+
+create table if not exists public.project_completions (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  project_id text not null,
+  xp_awarded integer not null default 0,
+  completed_at timestamptz not null default timezone('utc', now()),
+  primary key (user_id, project_id)
+);
+
+alter table public.project_completions enable row level security;
+
+drop policy if exists "project_completions_select_own" on public.project_completions;
+create policy "project_completions_select_own"
+on public.project_completions
+for select
+to authenticated
+using (auth.uid() = user_id);
+
+drop policy if exists "project_completions_insert_own" on public.project_completions;
+create policy "project_completions_insert_own"
+on public.project_completions
+for insert
+to authenticated
+with check (auth.uid() = user_id);
+
+create or replace function public.complete_project(
+  p_project_id text,
+  p_xp_award integer
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_user_id uuid := auth.uid();
+  v_xp_granted boolean := false;
+  v_xp_total integer := 0;
+begin
+  if v_user_id is null then
+    raise exception 'AUTH_REQUIRED';
+  end if;
+
+  insert into public.project_completions (user_id, project_id, xp_awarded)
+  values (v_user_id, p_project_id, p_xp_award)
+  on conflict (user_id, project_id) do nothing;
+
+  v_xp_granted := found;
+
+  insert into public.user_progress (user_id, current_level_id, xp_total)
+  values (
+    v_user_id,
+    coalesce((select current_level_id from public.user_progress where user_id = v_user_id), 'rust-level-1'),
+    case when v_xp_granted then p_xp_award else 0 end
+  )
+  on conflict (user_id) do update
+  set
+    xp_total = public.user_progress.xp_total + case when v_xp_granted then p_xp_award else 0 end,
+    updated_at = timezone('utc', now());
+
+  select xp_total into v_xp_total
+  from public.user_progress
+  where user_id = v_user_id;
+
+  return jsonb_build_object(
+    'xpGranted', v_xp_granted,
+    'xpTotal', v_xp_total
+  );
+end;
+$$;
+
+grant execute on function public.complete_project(text, integer) to authenticated;
+
+create table if not exists public.review_items (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  content_id text not null,
+  content_type text not null default 'exercise',
+  leitner_box smallint not null default 1,
+  last_reviewed_at timestamptz,
+  next_review_at timestamptz not null default (timezone('utc', now()) + interval '1 day'),
+  success_count integer not null default 0,
+  failure_count integer not null default 0,
+  created_at timestamptz not null default timezone('utc', now()),
+  updated_at timestamptz not null default timezone('utc', now()),
+  constraint review_items_content_type_check check (content_type in ('exercise')),
+  constraint review_items_leitner_box_check check (leitner_box between 1 and 6),
+  constraint review_items_success_count_check check (success_count >= 0),
+  constraint review_items_failure_count_check check (failure_count >= 0),
+  constraint review_items_user_content_unique unique (user_id, content_id)
+);
+
+create table if not exists public.review_attempts (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  review_item_id uuid not null references public.review_items(id) on delete cascade,
+  content_id text not null,
+  result text not null,
+  previous_box smallint not null,
+  next_box smallint not null,
+  reviewed_at timestamptz not null default timezone('utc', now()),
+  constraint review_attempts_result_check check (result in ('success', 'failure')),
+  constraint review_attempts_previous_box_check check (previous_box between 1 and 6),
+  constraint review_attempts_next_box_check check (next_box between 1 and 6)
+);
+
+create index if not exists review_items_user_next_review_idx
+on public.review_items (user_id, next_review_at);
+
+create index if not exists review_items_user_box_due_idx
+on public.review_items (user_id, leitner_box, next_review_at);
+
+create index if not exists review_attempts_user_reviewed_at_idx
+on public.review_attempts (user_id, reviewed_at desc);
+
+create index if not exists review_attempts_review_item_id_idx
+on public.review_attempts (review_item_id);
+
+alter table public.review_items enable row level security;
+alter table public.review_attempts enable row level security;
+
+drop policy if exists "review_items_select_own" on public.review_items;
+create policy "review_items_select_own"
+on public.review_items
+for select
+to authenticated
+using ((select auth.uid()) = user_id);
+
+drop policy if exists "review_items_insert_own" on public.review_items;
+create policy "review_items_insert_own"
+on public.review_items
+for insert
+to authenticated
+with check ((select auth.uid()) = user_id);
+
+drop policy if exists "review_items_update_own" on public.review_items;
+create policy "review_items_update_own"
+on public.review_items
+for update
+to authenticated
+using ((select auth.uid()) = user_id)
+with check ((select auth.uid()) = user_id);
+
+drop policy if exists "review_attempts_select_own" on public.review_attempts;
+create policy "review_attempts_select_own"
+on public.review_attempts
+for select
+to authenticated
+using ((select auth.uid()) = user_id);
+
+drop policy if exists "review_attempts_insert_own" on public.review_attempts;
+create policy "review_attempts_insert_own"
+on public.review_attempts
+for insert
+to authenticated
+with check ((select auth.uid()) = user_id);
+
+revoke all on public.review_items from anon, authenticated, public;
+revoke all on public.review_attempts from anon, authenticated, public;
+
+grant select, insert, update on public.review_items to authenticated;
+grant select, insert on public.review_attempts to authenticated;

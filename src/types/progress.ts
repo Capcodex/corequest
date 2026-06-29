@@ -5,6 +5,13 @@ export type UserProgress = {
   currentLevelId: string;
   completedLevelIds: string[];
   xpTotal: number;
+  currentContentId?: string;
+  completedContentIds?: string[];
+  currentCurriculumLevelId?: string | null;
+  currentCurriculumLevelNumber?: number | null;
+  currentThemeId?: string | null;
+  currentChapterId?: string | null;
+  completedProjectIds?: string[];
 };
 
 export type CrabProgress = {
@@ -39,6 +46,15 @@ export type CompleteLevelResult = {
   currentLevelId: string;
   nextLevelId: string | null;
   xpGranted: boolean;
+  xpTotal: number;
+  crabProgress: CrabProgress;
+  leveledUp: boolean;
+};
+
+export type CompleteProjectResult = {
+  completedProjectId: string;
+  xpGranted: boolean;
+  xpAward: number;
   xpTotal: number;
   crabProgress: CrabProgress;
   leveledUp: boolean;

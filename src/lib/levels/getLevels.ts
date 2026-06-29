@@ -1,6 +1,6 @@
-import levels from "@/data/rust-foundations/levels.json";
+import { getExerciseEntries } from "@/lib/content/getCurriculum";
 import { Level } from "@/types/level";
 
 export function getLevels(): Level[] {
-  return [...(levels as Level[])].sort((left, right) => left.orderIndex - right.orderIndex);
+  return getExerciseEntries();
 }

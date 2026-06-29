@@ -1,14 +1,14 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 const sandboxUrl = process.env.SANDBOX_TEST_URL ?? "http://sandbox-service:4000/execute";
 
-async function execute(code: string) {
+async function execute(code: string, stdin?: string | null) {
   const response = await fetch(sandboxUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ code }),
+    body: JSON.stringify({ code, stdin: stdin ?? null }),
   });
 
   return response.json();
@@ -19,6 +19,15 @@ describe("sandbox integration", () => {
     const result = await execute('fn main() { println!("13"); }');
     expect(result.status).toBe("success");
     expect(result.stdout.trim()).toBe("13");
+  });
+
+  it("passes stdin to the Rust program", async () => {
+    const result = await execute(
+      'use std::io::{self, Read}; fn main() { let mut input = String::new(); io::stdin().read_to_string(&mut input).unwrap(); print!("{}", input.trim()); }',
+      "42\n",
+    );
+    expect(result.status).toBe("success");
+    expect(result.stdout.trim()).toBe("42");
   });
 
   it("returns compile_error for invalid Rust code", async () => {

@@ -4,6 +4,7 @@ import { getCrabProgress } from "@/lib/progress/crabProgress";
 import { buildCompletionState } from "@/lib/progress/completionState";
 import { getUserProgress } from "@/lib/progress/getUserProgress";
 import { getNextLevelId, isLevelUnlocked, shouldGrantXp } from "@/lib/progress/progressRules";
+import { createReviewItemForCompletedExercise } from "@/lib/review/createReviewItem";
 import { createClient } from "@/lib/supabase/server";
 import { CompleteLevelResult, UserProgressSummary } from "@/types/progress";
 
@@ -52,6 +53,17 @@ export async function completeLevel(userId: string, levelId: string): Promise<Co
   });
   const previousCrabProgress = getCrabProgress(progress.xpTotal);
   const crabProgress = getCrabProgress(persistedResult.xpTotal);
+
+  if (persistedResult.xpGranted) {
+    try {
+      await createReviewItemForCompletedExercise(supabase, {
+        userId,
+        contentId: levelId,
+      });
+    } catch (error) {
+      console.warn("Unable to schedule review item after level completion:", error);
+    }
+  }
 
   return {
     completedLevelId: levelId,

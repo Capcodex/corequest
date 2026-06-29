@@ -1,6 +1,11 @@
 export const SANDBOX_CODE_MAX_LENGTH = 12_000;
+export const SANDBOX_STDIN_MAX_LENGTH = 8_000;
+export const SANDBOX_PROJECT_FILES_MAX_COUNT = 24;
+export const SANDBOX_PROJECT_FILE_MAX_LENGTH = 20_000;
+export const SANDBOX_PROJECT_TOTAL_BYTES_MAX = 80_000;
 export const SANDBOX_TIMEOUT_MS = 4_000;
+export const SANDBOX_PROJECT_TIMEOUT_MS = 10_000;
 export const SANDBOX_MEMORY_LIMIT = "256m";
 export const SANDBOX_CPU_LIMIT = "0.5";
 export const SANDBOX_PIDS_LIMIT = "128";
-export const SANDBOX_RUNNER_IMAGE = "rust:1.78-alpine";
+export const SANDBOX_RUNNER_IMAGE = "rust:1.78";

@@ -18,6 +18,7 @@ export type ExecutionResult = {
 export type ExecuteCodeRequest = {
   levelId: string;
   code: string;
+  stdin?: string | null;
   anonymousSessionId?: string | null;
 };
 

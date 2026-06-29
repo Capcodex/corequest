@@ -32,6 +32,9 @@ export async function Header() {
                 <Link href="/map" className={navLinkClassName}>
                   Parcours
                 </Link>
+                <Link href="/review" className={navLinkClassName}>
+                  Révisions
+                </Link>
               </>
             ) : null}
             <Link href="/onboarding" className={navLinkClassName}>
@@ -66,6 +69,9 @@ export async function Header() {
               </Button>
               <Button asChild size="sm" variant="secondary">
                 <Link href="/map">Parcours</Link>
+              </Button>
+              <Button asChild size="sm" variant="secondary">
+                <Link href="/review">Révisions</Link>
               </Button>
             </>
           ) : null}

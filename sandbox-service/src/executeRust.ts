@@ -7,6 +7,7 @@ import {
   SANDBOX_MEMORY_LIMIT,
   SANDBOX_PIDS_LIMIT,
   SANDBOX_RUNNER_IMAGE,
+  SANDBOX_STDIN_MAX_LENGTH,
   SANDBOX_TIMEOUT_MS,
 } from "./securityLimits.ts";
 import type { SandboxExecutionResponse } from "./types.ts";
@@ -14,7 +15,7 @@ import type { SandboxExecutionResponse } from "./types.ts";
 const COMPILE_ERROR_EXIT_CODE = 91;
 const DOCKER_FAILURE_EXIT_CODE = 125;
 
-export async function executeRust(code: string): Promise<SandboxExecutionResponse> {
+export async function executeRust(code: string, stdin: string | null = null): Promise<SandboxExecutionResponse> {
   if (code.trim().length === 0) {
     return {
       status: "compile_error",
@@ -33,11 +34,21 @@ export async function executeRust(code: string): Promise<SandboxExecutionRespons
     };
   }
 
+  if ((stdin ?? "").length > SANDBOX_STDIN_MAX_LENGTH) {
+    return {
+      status: "sandbox_error",
+      stdout: "",
+      stderr: "L'entrée standard dépasse la taille autorisée pour le MVP.",
+      durationMs: 0,
+    };
+  }
+
+  const encodedCode = Buffer.from(code, "utf8").toString("base64");
+  const encodedStdin = Buffer.from(stdin ?? "", "utf8").toString("base64");
   const startTime = performance.now();
   const dockerArgs = [
     "run",
     "--rm",
-    "-i",
     "--network",
     "none",
     "--memory",
@@ -54,24 +65,29 @@ export async function executeRust(code: string): Promise<SandboxExecutionRespons
     "/workspace:rw,exec,nosuid,size=128m",
     "--workdir",
     "/workspace",
+    "-e",
+    `COREQUEST_CODE_BASE64=${encodedCode}`,
+    "-e",
+    `COREQUEST_STDIN_BASE64=${encodedStdin}`,
     SANDBOX_RUNNER_IMAGE,
     "sh",
     "-c",
     [
       "set -eu",
       "WORKDIR=$(mktemp -d /workspace/run-XXXXXX)",
-      "cat > \"$WORKDIR/main.rs\"",
+      "printf '%s' \"$COREQUEST_CODE_BASE64\" | base64 -d > \"$WORKDIR/main.rs\"",
+      "printf '%s' \"$COREQUEST_STDIN_BASE64\" | base64 -d > \"$WORKDIR/stdin.txt\"",
       "if ! rustc \"$WORKDIR/main.rs\" -o \"$WORKDIR/app\" 2>\"$WORKDIR/compile.stderr\"; then",
       "  cat \"$WORKDIR/compile.stderr\" >&2",
       `  exit ${COMPILE_ERROR_EXIT_CODE}`,
       "fi",
-      "\"$WORKDIR/app\"",
+      "\"$WORKDIR/app\" < \"$WORKDIR/stdin.txt\"",
     ].join("\n"),
   ];
 
   return await new Promise<SandboxExecutionResponse>((resolve) => {
     const child = spawn("docker", dockerArgs, {
-      stdio: ["pipe", "pipe", "pipe"],
+      stdio: ["ignore", "pipe", "pipe"],
     });
 
     const stdoutChunks: Buffer[] = [];
@@ -156,8 +172,6 @@ export async function executeRust(code: string): Promise<SandboxExecutionRespons
         durationMs,
       });
     });
-
-    child.stdin.end(code);
   });
 }
 

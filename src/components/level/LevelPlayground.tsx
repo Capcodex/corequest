@@ -26,11 +26,12 @@ export function LevelPlayground({ level, nextLevelId }: LevelPlaygroundProps) {
   const [resolvedNextLevelId, setResolvedNextLevelId] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const handleRun = async (code: string) => {
+  const handleRun = async (code: string, stdin: string | null) => {
     const anonymousSessionId = getAnonymousSessionId();
     const payload: ExecuteCodeRequest = {
       levelId: level.id,
       code,
+      stdin,
       anonymousSessionId,
     };
 
@@ -83,7 +84,12 @@ export function LevelPlayground({ level, nextLevelId }: LevelPlaygroundProps) {
 
   return (
     <div className="space-y-4">
-      <CodeEditor isRunning={isRunning} onRun={handleRun} />
+      <CodeEditor
+        isRunning={isRunning}
+        onRun={handleRun}
+        defaultStdin={level.stdin ?? null}
+        showStdin={level.stdin !== null && level.stdin !== undefined}
+      />
       {isCompleted ? (
         <Alert tone="success">
           <div className="space-y-3">

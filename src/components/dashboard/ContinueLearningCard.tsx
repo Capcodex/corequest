@@ -3,40 +3,40 @@ import { CrabAvatar } from "@/components/progress/CrabAvatar";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
-import { Level } from "@/types/level";
+import { CurriculumRoadmap } from "@/lib/progress/getCurriculumRoadmap";
 import { UserProgressSummary } from "@/types/progress";
 
 type ContinueLearningCardProps = {
-  currentLevel: Level | null;
   progress: UserProgressSummary;
+  roadmap: CurriculumRoadmap;
 };
 
-export function ContinueLearningCard({ currentLevel, progress }: ContinueLearningCardProps) {
+export function ContinueLearningCard({ progress, roadmap }: ContinueLearningCardProps) {
   const crab = progress.crabProgress;
-  const crabVariant = crab.isMaxLevel ? "celebration" : currentLevel ? "current" : "idle";
+  const crabVariant = crab.isMaxLevel ? "celebration" : roadmap.currentChapter ? "current" : "idle";
+  const action = roadmap.recommendedAction;
+  const nextProjectIsSecondary = roadmap.nextProject?.status === "available" && action.kind !== "project";
 
   return (
     <Card className="grid gap-6 p-6 lg:grid-cols-[minmax(0,1.1fr)_320px] lg:p-8">
       <div className="space-y-4">
         <p className="text-sm uppercase tracking-[0.24em] text-muted">À reprendre</p>
-        <h2 className="text-2xl font-semibold text-foreground md:text-3xl">
-          {currentLevel ? currentLevel.title : "Prêt pour la suite du parcours"}
-        </h2>
-        <p className="text-sm leading-7 text-muted md:text-base">
-          {currentLevel
-            ? currentLevel.summary
-            : "Aucun niveau courant n’a pu être identifié pour cette session."}
-        </p>
+        <h2 className="text-2xl font-semibold text-foreground md:text-3xl">{action.title}</h2>
+        <p className="text-sm leading-7 text-muted md:text-base">{action.description}</p>
 
         <div className="flex flex-col gap-3 sm:flex-row">
-          {currentLevel ? (
-            <Button asChild>
-              <Link href={`/levels/${currentLevel.id}`}>Reprendre ce niveau</Link>
-            </Button>
-          ) : null}
-          <Button asChild variant="secondary">
-            <Link href="/map">Voir le parcours</Link>
+          <Button asChild>
+            <Link href={action.href}>{action.label}</Link>
           </Button>
+          {nextProjectIsSecondary && roadmap.nextProject ? (
+            <Button asChild variant="secondary">
+              <Link href={roadmap.nextProject.href}>Ouvrir le projet</Link>
+            </Button>
+          ) : (
+            <Button asChild variant="secondary">
+              <Link href="/map">Voir le parcours</Link>
+            </Button>
+          )}
         </div>
       </div>
 
@@ -45,10 +45,17 @@ export function ContinueLearningCard({ currentLevel, progress }: ContinueLearnin
           <CrabAvatar level={crab.level} size="md" variant={crabVariant} />
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-muted">Repère visuel</p>
-            <p className="mt-2 text-lg font-semibold text-foreground">
-              Crabe niveau {crab.level} — {crab.title}
-            </p>
+            <p className="mt-2 text-lg font-semibold text-foreground">Crabe niveau {crab.level} — {crab.title}</p>
           </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
+          <p className="text-xs uppercase tracking-[0.22em] text-muted">Chapitre actif</p>
+          <p className="mt-2 text-sm text-foreground">
+            {roadmap.currentChapter
+              ? `${roadmap.currentChapter.title} · ${roadmap.currentChapter.completedExerciseCount}/${roadmap.currentChapter.totalExerciseCount} exercice(s) validé(s).`
+              : "Aucun chapitre actif détecté pour cette session."}
+          </p>
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
@@ -58,18 +65,15 @@ export function ContinueLearningCard({ currentLevel, progress }: ContinueLearnin
               ? "Le niveau maximum du crabe est atteint."
               : `${crab.xpRemainingToNextLevel} XP avant le niveau ${crab.nextLevel}.`}
           </p>
-          <ProgressBar
-            className="mt-4"
-            tone="violet"
-            value={crab.isMaxLevel ? 100 : crab.progressPercentage}
-          />
+          <ProgressBar className="mt-4" tone="violet" value={crab.isMaxLevel ? 100 : crab.progressPercentage} />
         </div>
 
-        {currentLevel ? (
+        {roadmap.nextProject ? (
           <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4 text-sm text-muted">
-            <p className="text-xs uppercase tracking-[0.22em] text-muted">Focus actuel</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-muted">Projet de synthèse</p>
             <p className="mt-2 text-foreground">
-              <span className="font-semibold">Concept :</span> {currentLevel.concept}
+              <span className="font-semibold">{roadmap.nextProject.title}</span>
+              {" "}· {roadmap.nextProject.status === "available" ? "ouvert" : "à venir"}
             </p>
           </div>
         ) : null}

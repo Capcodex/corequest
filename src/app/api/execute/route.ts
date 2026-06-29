@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLevelById } from "@/lib/levels/getLevelById";
-import { isExpectedOutput } from "@/lib/levels/levelValidation";
+import { validateExerciseResult } from "@/lib/levels/levelValidation";
 import { trackEvent } from "@/lib/analytics/trackEvent";
 import { recordSubmission } from "@/lib/progress/recordSubmission";
 import { executeRustCode } from "@/lib/sandbox/executeRustCode";
 import { ExecuteCodeRequest, ExecutionResult } from "@/types/execution";
 
 const MAX_CODE_LENGTH = 12_000;
+const MAX_STDIN_LENGTH = 8_000;
 
 export async function POST(request: NextRequest) {
   let payload: ExecuteCodeRequest;
@@ -35,6 +36,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if ((payload.stdin ?? "").length > MAX_STDIN_LENGTH) {
+    return NextResponse.json(
+      { error: "L’entrée standard dépasse la limite autorisée pour le MVP." },
+      { status: 400 },
+    );
+  }
+
   const level = getLevelById(payload.levelId);
 
   if (!level) {
@@ -47,10 +55,11 @@ export async function POST(request: NextRequest) {
       eventName: "code_execution_started",
       properties: {
         levelId: payload.levelId,
+        hasStdin: Boolean(payload.stdin && payload.stdin.length > 0),
       },
     });
 
-    const sandboxResult = await executeRustCode(payload.code);
+    const sandboxResult = await executeRustCode(payload.code, payload.stdin ?? null);
 
     let responsePayload: ExecutionResult = {
       ...sandboxResult,
@@ -58,13 +67,13 @@ export async function POST(request: NextRequest) {
     };
 
     if (sandboxResult.status === "success") {
-      const passed = isExpectedOutput(sandboxResult.stdout, level.expectedOutput);
+      const validation = validateExerciseResult(sandboxResult.stdout, level.validation);
 
       responsePayload = {
         ...sandboxResult,
-        status: passed ? "success" : "wrong_output",
-        passed,
-        expectedOutput: passed ? undefined : level.expectedOutput,
+        status: validation.passed ? "success" : "wrong_output",
+        passed: validation.passed,
+        expectedOutput: validation.expectedOutput,
       };
     }
 

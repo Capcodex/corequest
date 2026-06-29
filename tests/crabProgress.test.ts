@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import { getCrabProgress } from "../src/lib/progress/crabProgress";
 
 describe("getCrabProgress", () => {
@@ -18,22 +18,22 @@ describe("getCrabProgress", () => {
     });
   });
 
-  it("uses nonlinear thresholds for later levels", () => {
-    expect(getCrabProgress(359)).toMatchObject({
-      level: 3,
-      nextLevel: 4,
+  it("keeps nonlinear thresholds across the longer curriculum", () => {
+    expect(getCrabProgress(824)).toMatchObject({
+      level: 4,
+      nextLevel: 5,
       xpRemainingToNextLevel: 1,
     });
-    expect(getCrabProgress(360)).toMatchObject({
-      level: 4,
-      title: "Navigateur",
-      nextLevel: 5,
+    expect(getCrabProgress(825)).toMatchObject({
+      level: 5,
+      title: "Technicien",
+      nextLevel: 6,
     });
   });
 
-  it("caps the crab at the final level", () => {
-    expect(getCrabProgress(1350)).toMatchObject({
-      level: 8,
+  it("caps the crab at the current final content milestone", () => {
+    expect(getCrabProgress(7420)).toMatchObject({
+      level: 12,
       nextLevel: null,
       xpRemainingToNextLevel: 0,
       isMaxLevel: true,

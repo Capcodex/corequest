@@ -7,6 +7,18 @@ export type SandboxExecutionStatus =
 
 export type SandboxExecutionRequest = {
   code: string;
+  stdin?: string | null;
+};
+
+export type SandboxProjectFile = {
+  path: string;
+  content: string;
+};
+
+export type SandboxProjectExecutionRequest = {
+  files: SandboxProjectFile[];
+  runCommand: string;
+  stdin?: string | null;
 };
 
 export type SandboxExecutionResponse = {
